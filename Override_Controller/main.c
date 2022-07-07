@@ -5,10 +5,12 @@
 #define OVERRIDE_PORT PB4
 #define RC_RECEIVER_PORT PB0
 
+// Macros
 #define OVERRIDE_ON PORTB |= (1 << OVERRIDE_PORT)
 #define OVERRIDE_OFF PORTB &= ~(1 << OVERRIDE_PORT)
 #define RISING_EDGE PINB & (1 << RC_RECEIVER_PORT)
 
+// Function prototypes
 void Calibrate_OSCILLATOR(void);
 void Init_INTERRUPTS(void);
 void Init_PORT(void);
@@ -31,7 +33,7 @@ int main(void)
             
             override_pulse_ready = 0;
 
-            Override_Control(10);           // percent RC stick when LED shall switched on
+            Override_Control(10);           // percent PWM when override is activated
             
             GIFR = (1 << PCIF);             // clear Pin Change Interrupt Flag. Might not be needed - Doc says flag is cleared after ISR is executed.
             GIMSK |= (1 << PCIE);           // Pin Change Interrupt Enable
