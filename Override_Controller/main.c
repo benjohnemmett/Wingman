@@ -14,7 +14,7 @@
 void Calibrate_OSCILLATOR(void);
 void Init_INTERRUPTS(void);
 void Init_PORT(void);
-void Override_Control(float);
+void Override_Control(float, float);
 float Percent_PWM(uint8_t);
 
 // Global variables
@@ -26,6 +26,9 @@ int main(void)
     Calibrate_OSCILLATOR();
     Init_PORT();
     Init_INTERRUPTS();
+    
+    float override_high_trigger = 15.0;
+    float override_low_trigger = 10.0;
 
     while (1)
     {       
@@ -33,7 +36,7 @@ int main(void)
             
             override_pulse_ready = 0;
 
-            Override_Control(10);           // percent PWM when override is activated
+            Override_Control(override_low_trigger, override_high_trigger);           // percent PWM hysteresis
             
             GIFR = (1 << PCIF);             // clear Pin Change Interrupt Flag. Might not be needed - Doc says flag is cleared after ISR is executed.
             GIMSK |= (1 << PCIE);           // Pin Change Interrupt Enable
@@ -52,23 +55,27 @@ float Percent_PWM(uint8_t count)
     
     float pct = (p*count - min) / (max - min) * 100;
     
+    pct = (pct < 0) ? 0 : pct;
+    pct = (pct > 100) ? 100 : pct;
+    
     return pct;
 }
 
-void Override_Control(float pct_trigger)
+void Override_Control(float pct_low, float pct_high)
 {    
     float pct;
 
     pct = Percent_PWM(override_timer_count);
     
-    if (pct >= pct_trigger) 
+    if (pct >= pct_high) 
     {
         OVERRIDE_ON;
     }
-    else 
+    else if (pct <= pct_low)
     {
         OVERRIDE_OFF;
     }
+    else {} // Inside hysteresis band, maintain previous state
 }
 
 void Calibrate_OSCILLATOR(void)
