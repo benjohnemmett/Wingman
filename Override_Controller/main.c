@@ -18,7 +18,7 @@ void Override_Control(float, float);
 float Percent_PWM(uint8_t);
 
 // Global variables
-volatile uint8_t override_pulse_ready = 1;
+volatile uint8_t override_pulse_ready = 0;
 volatile uint8_t override_timer_count = 0;
 
 int main(void)
