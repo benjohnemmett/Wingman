@@ -28,7 +28,7 @@ tests: build
 
 .PHONY: clean
 clean:
-	rm ./PidControllerTests.exe
+	rm -f ./*.exe
 
 
 # Enable dependency checking

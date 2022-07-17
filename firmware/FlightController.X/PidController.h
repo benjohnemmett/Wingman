@@ -24,6 +24,7 @@ extern "C" {
         float Kd;
         
         float last_error;
+        bool has_last_error = 0;
         float error_sum;
         PidControllerStatus status;
     };
