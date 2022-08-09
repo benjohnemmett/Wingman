@@ -4,6 +4,8 @@ float RunPidController(PidControllerState *state, float error, float delta_t_ms)
     
     // Integrator
     state->integrator += state->Ki * error * delta_t_ms;
+    
+    // Clamp Integrator
     if (state->integrator > state->integrator_max) {
         state->integrator = state->integrator_max;
     } else if (state->integrator < state->integrator_min) {

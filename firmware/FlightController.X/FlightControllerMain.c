@@ -1,11 +1,11 @@
 /*
  * File:   FlightControllerMain.c
- * Author: benjo
+ * Author: Ben Emmett
  *
  * Created on July 15, 2022, 10:33 AM
  */
 
-#include <avr/io.h>
+#include "FlightControllerMain_ATMega4809.h"
 #include "PidController.h"
 
 #define UPDATE_PERIOD_MS 10
@@ -13,9 +13,15 @@
 PidControllerState rollPid;
 PidControllerState pitchPid;
 
+volatile uint16_t ch1_pulse_width_us;
+volatile uint16_t ch2_pulse_width_us;
+volatile uint16_t ch3_pulse_width_us;
+volatile uint16_t ch4_pulse_width_us;
+
 volatile uint8_t update_timer_expired = 0;
 
 int main(void) {
+    setup_platform_specific_registers();
     
     // Initialize I2C for IMU
     // Initialize I2C for PWM controller

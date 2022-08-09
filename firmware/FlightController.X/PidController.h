@@ -27,7 +27,7 @@ extern "C" {
         float integrator_min;
         
         float last_error;
-        bool has_last_error = 0;
+        char has_last_error;
         float integrator;
         PidControllerStatus status;
     };
