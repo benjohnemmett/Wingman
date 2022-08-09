@@ -23,9 +23,12 @@ extern "C" {
         float Ki;
         float Kd;
         
+        float integrator_max;
+        float integrator_min;
+        
         float last_error;
         bool has_last_error = 0;
-        float error_sum;
+        float integrator;
         PidControllerStatus status;
     };
     typedef struct PidControllerState PidControllerState;

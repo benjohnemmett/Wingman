@@ -1,6 +1,6 @@
 /* 
  * File:   PidControllerTests.c
- * Author: benjo
+ * Author: Ben Emmett
  *
  * Created on July 15, 2022, 2:39 PM
  */
@@ -61,4 +61,20 @@ TEST_CASE( "D = 1.0 Non-constant input ", "[run]") {
     REQUIRE( abs(RunPidController(&pid, inputs[1], 1.0) - expectedOutputs[1]) < epsilon);
     REQUIRE( abs(RunPidController(&pid, inputs[2], 1.0) - expectedOutputs[2]) < epsilon);
     REQUIRE( abs(RunPidController(&pid, inputs[3], 1.0) - expectedOutputs[3]) < epsilon);
+}
+
+TEST_CASE( "I = 0.1 Constant dt", "[run]") {
+    PidControllerState pid;
+    pid.Kp = 0;
+    pid.Ki = 0.1;
+    pid.Kd = 0;
+    pid.integrator_min = -1.0;
+    pid.integrator_max = 1.0;
+    
+    float inputs[]          = {1.0, 0.5, -0.3};
+    float expectedOutputs[] = {0.1, 0.15, 0.12};
+    
+    REQUIRE( abs(RunPidController(&pid, inputs[0], 1.0) - expectedOutputs[0]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[1], 1.0) - expectedOutputs[1]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[2], 1.0) - expectedOutputs[2]) < epsilon);
 }
