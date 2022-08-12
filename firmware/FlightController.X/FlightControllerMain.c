@@ -22,6 +22,7 @@ volatile uint8_t update_timer_expired = 0;
 
 int main(void) {
     setup_platform_specific_registers();
+    blink_test();
     
     // Initialize I2C for IMU
     // Initialize I2C for PWM controller
