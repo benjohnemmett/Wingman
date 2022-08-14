@@ -4,8 +4,7 @@
  *
  * Created on July 15, 2022, 10:33 AM
  */
-
-#include "FlightControllerMain_ATMega4809.h"
+#include "Atmega4809/HAL_ATMega4809.h"
 #include "PidController.h"
 
 #define UPDATE_PERIOD_MS 10
@@ -21,8 +20,9 @@ volatile uint16_t ch4_pulse_width_us;
 volatile uint8_t update_timer_expired = 0;
 
 int main(void) {
-    setup_platform_specific_registers();
-    blink_test();
+    platform_specific_setup();
+    platform_specific_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
+    platform_specific_test();
     
     // Initialize I2C for IMU
     // Initialize I2C for PWM controller
