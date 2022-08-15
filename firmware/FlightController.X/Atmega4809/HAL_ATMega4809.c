@@ -2,6 +2,7 @@
 #include "HAL_ATMega4809.h"
 #include "uart.h"
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 // IO Definitions
 #define __PIN_CTRL_REG__(port, pin) __PORT__(port).__PIN_CTRL__(pin)
@@ -19,23 +20,26 @@ void platform_specific_setup() {
     uart0_init();
 
     // Setup input capture interrupts
-//    __PIN_CTRL_REG__(PWM_IN_1_PORT, PWM_IN_1_PIN) |= PORT_ISC_BOTHEDGES_gc;
-//    __PIN_CTRL_REG__(PWM_IN_2_PORT, PWM_IN_2_PIN) |= PORT_ISC_BOTHEDGES_gc;
-//    __PIN_CTRL_REG__(PWM_IN_3_PORT, PWM_IN_3_PIN) |= PORT_ISC_BOTHEDGES_gc;
-//    __PIN_CTRL_REG__(PWM_IN_4_PORT, PWM_IN_4_PIN) |= PORT_ISC_BOTHEDGES_gc;
+    // TODO Remove pullups when switching to PWM setup
+    __PIN_CTRL_REG__(PWM_IN_1_PORT, PWM_IN_1_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm;
+    __PIN_CTRL_REG__(PWM_IN_2_PORT, PWM_IN_2_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm;
+    __PIN_CTRL_REG__(PWM_IN_3_PORT, PWM_IN_3_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm; 
+    __PIN_CTRL_REG__(PWM_IN_4_PORT, PWM_IN_4_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm;
+    
+    sei();
 }
 
 /* 
  * Runs a test that blinks an LED on PIN A2 and writes acii text to UART0 (TX on PA0)
  */
 void platform_specific_test() {
-    PORTA.DIRSET = PIN2_bm; // Set PA0 as output
+    PORTF.DIRSET = PIN3_bm; // Set as output
     
     uart0_send_string((char*)"Begin UART0 Test...\r\n\0");
     
     char offset = 0;
     while (1) {
-        PORTA.OUTTGL = PIN2_bm;
+        PORTF.OUTTGL = PIN3_bm;
         uart0_send_char('a' + offset++);
         if (offset >= 26) {
             uart0_send_string((char*)"\r\n\0");
@@ -47,6 +51,28 @@ void platform_specific_test() {
 
 void platform_specific_write_string(char* string) {
     uart0_send_string(string);
+}
+
+ISR(PORTA_PORT_vect) {
+    uint8_t pins = PORTA.IN;
+    
+    if (PORTA.INTFLAGS & PWM_IN_1_PIN_bm) {
+        uart0_send_char('1');
+        PORTA.INTFLAGS |= PWM_IN_1_PIN_bm;
+    }
+    if (PORTA.INTFLAGS & PWM_IN_2_PIN_bm) {
+        uart0_send_char('2');
+        PORTA.INTFLAGS |= PWM_IN_2_PIN_bm;
+    }
+    if (PORTA.INTFLAGS & PWM_IN_3_PIN_bm) {
+        uart0_send_char('3');
+        PORTA.INTFLAGS |= PWM_IN_3_PIN_bm;
+    }
+    if (PORTA.INTFLAGS & PWM_IN_4_PIN_bm) {
+        uart0_send_char('4');
+        PORTA.INTFLAGS |= PWM_IN_4_PIN_bm;
+    }
+
 }
 
 #undef __PIN_CTRL_REG__

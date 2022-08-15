@@ -13,13 +13,17 @@
 #define F_CPU 20000000
 
 #define PWM_IN_1_PORT A
-#define PWM_IN_1_PIN 1
+#define PWM_IN_1_PIN 2
+#define PWM_IN_1_PIN_bm (0x01 << PWM_IN_1_PIN)
 #define PWM_IN_2_PORT A
-#define PWM_IN_2_PIN 2
+#define PWM_IN_2_PIN 3
+#define PWM_IN_2_PIN_bm (0x01 << PWM_IN_2_PIN)
 #define PWM_IN_3_PORT A
-#define PWM_IN_3_PIN 3
+#define PWM_IN_3_PIN 4
+#define PWM_IN_3_PIN_bm (0x01 << PWM_IN_3_PIN)
 #define PWM_IN_4_PORT A
-#define PWM_IN_4_PIN 3
+#define PWM_IN_4_PIN 5
+#define PWM_IN_4_PIN_bm (0x01 << PWM_IN_4_PIN)
 
 #define UART_TX_PORT A
 #define UART_TX_PIN 0
