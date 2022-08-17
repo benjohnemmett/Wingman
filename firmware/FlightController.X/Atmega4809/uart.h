@@ -25,6 +25,8 @@ extern "C" {
     
     void uart0_send_string(char *string);
     
+    void uart0_print_u16(uint16_t value);
+    
 #ifdef	__cplusplus
 }
 #endif

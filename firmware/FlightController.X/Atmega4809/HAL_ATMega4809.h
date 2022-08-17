@@ -9,6 +9,7 @@
 #define	HAL_ATMEGA4809_H
 
 #include <avr/io.h>
+#include "../FlightControllerTypes.h"
 
 #define F_CPU 20000000
 

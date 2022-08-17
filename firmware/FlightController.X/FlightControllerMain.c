@@ -4,6 +4,7 @@
  *
  * Created on July 15, 2022, 10:33 AM
  */
+#include "FlightControllerTypes.h"
 #include "Atmega4809/HAL_ATMega4809.h"
 #include "PidController.h"
 
@@ -12,10 +13,7 @@
 PidControllerState rollPid;
 PidControllerState pitchPid;
 
-volatile uint16_t ch1_pulse_width_us;
-volatile uint16_t ch2_pulse_width_us;
-volatile uint16_t ch3_pulse_width_us;
-volatile uint16_t ch4_pulse_width_us;
+volatile PwmInputCapture input_capture;
 
 volatile uint8_t update_timer_expired = 0;
 

@@ -11,6 +11,27 @@
 
 #define _pin_control(port,pin) port ## PIN ## pin ##CTRL
 
+extern volatile PwmInputCapture input_capture;
+
+static void setup_input_capture() {
+    // Configure interrupt on input capture pins
+    __PIN_CTRL_REG__(PWM_IN_1_PORT, PWM_IN_1_PIN) |= PORT_ISC_BOTHEDGES_gc;
+    __PIN_CTRL_REG__(PWM_IN_2_PORT, PWM_IN_2_PIN) |= PORT_ISC_BOTHEDGES_gc;
+    __PIN_CTRL_REG__(PWM_IN_3_PORT, PWM_IN_3_PIN) |= PORT_ISC_BOTHEDGES_gc; 
+    __PIN_CTRL_REG__(PWM_IN_4_PORT, PWM_IN_4_PIN) |= PORT_ISC_BOTHEDGES_gc;
+    
+    // Start input capture timers
+    TCB0.CCMP = 0xFFFF; // Set TOP value to MAX
+    TCB0.CTRLA = TCB_CLKSEL_CLKDIV2_gc | 0x01; // Enable & set to clkdiv2
+    TCB1.CCMP = 0xFFFF; // Set TOP value to MAX
+    TCB1.CTRLA = TCB_CLKSEL_CLKDIV2_gc | 0x01; // Enable & set to clkdiv2
+    TCB2.CCMP = 0xFFFF; // Set TOP value to MAX
+    TCB2.CTRLA = TCB_CLKSEL_CLKDIV2_gc | 0x01; // Enable & set to clkdiv2
+    TCB3.CCMP = 0xFFFF; // Set TOP value to MAX
+    TCB3.CTRLA = TCB_CLKSEL_CLKDIV2_gc | 0x01; // Enable & set to clkdiv2
+    
+    sei();
+}
 
 void platform_specific_setup() {
     // Set clock divider to 1
@@ -18,15 +39,9 @@ void platform_specific_setup() {
     CLKCTRL.MCLKCTRLB = 0; //Clock Div = 1
     
     uart0_init();
-
-    // Setup input capture interrupts
-    // TODO Remove pullups when switching to PWM setup
-    __PIN_CTRL_REG__(PWM_IN_1_PORT, PWM_IN_1_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm;
-    __PIN_CTRL_REG__(PWM_IN_2_PORT, PWM_IN_2_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm;
-    __PIN_CTRL_REG__(PWM_IN_3_PORT, PWM_IN_3_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm; 
-    __PIN_CTRL_REG__(PWM_IN_4_PORT, PWM_IN_4_PIN) |= PORT_ISC_BOTHEDGES_gc | PORT_PULLUPEN_bm;
     
-    sei();
+    // Setup input capture interrupts
+    setup_input_capture();
 }
 
 /* 
@@ -37,15 +52,25 @@ void platform_specific_test() {
     
     uart0_send_string((char*)"Begin UART0 Test...\r\n\0");
     
-    char offset = 0;
     while (1) {
         PORTF.OUTTGL = PIN3_bm;
-        uart0_send_char('a' + offset++);
-        if (offset >= 26) {
-            uart0_send_string((char*)"\r\n\0");
-            offset = 0;
-        }
-        _delay_ms(250);
+        uart0_send_string((char*)"---\r\n\0");
+        uart0_send_string((char*)"1: \0");
+        uart0_print_u16(input_capture.ch1_pulse_width_us);
+        uart0_send_string((char*)"\r\n\0");
+        
+        uart0_send_string((char*)"2: \0");
+        uart0_print_u16(input_capture.ch2_pulse_width_us);
+        uart0_send_string((char*)"\r\n\0");
+        
+        uart0_send_string((char*)"3: \0");
+        uart0_print_u16(input_capture.ch3_pulse_width_us);
+        uart0_send_string((char*)"\r\n\0");
+        
+        uart0_send_string((char*)"4: \0");
+        uart0_print_u16(input_capture.ch4_pulse_width_us);
+        uart0_send_string((char*)"\r\n\0");
+        _delay_ms(200);
     }
 }
 
@@ -57,22 +82,37 @@ ISR(PORTA_PORT_vect) {
     uint8_t pins = PORTA.IN;
     
     if (PORTA.INTFLAGS & PWM_IN_1_PIN_bm) {
-        uart0_send_char('1');
+        if (pins & PWM_IN_1_PIN_bm) {
+            TCB0.CNT = 0;
+        } else {
+            input_capture.ch1_pulse_width_us = TCB0.CNT/10;
+        }
         PORTA.INTFLAGS |= PWM_IN_1_PIN_bm;
     }
     if (PORTA.INTFLAGS & PWM_IN_2_PIN_bm) {
-        uart0_send_char('2');
+        if (pins & PWM_IN_2_PIN_bm) {
+            TCB1.CNT = 0;
+        } else {
+            input_capture.ch2_pulse_width_us = TCB1.CNT/10;
+        }
         PORTA.INTFLAGS |= PWM_IN_2_PIN_bm;
     }
     if (PORTA.INTFLAGS & PWM_IN_3_PIN_bm) {
-        uart0_send_char('3');
+        if (pins & PWM_IN_3_PIN_bm) {
+            TCB2.CNT = 0;
+        } else {
+            input_capture.ch3_pulse_width_us = TCB2.CNT/10;
+        }
         PORTA.INTFLAGS |= PWM_IN_3_PIN_bm;
     }
     if (PORTA.INTFLAGS & PWM_IN_4_PIN_bm) {
-        uart0_send_char('4');
+        if (pins & PWM_IN_4_PIN_bm) {
+            TCB3.CNT = 0;
+        } else {
+            input_capture.ch4_pulse_width_us = TCB3.CNT/10;
+        }
         PORTA.INTFLAGS |= PWM_IN_4_PIN_bm;
     }
-
 }
 
 #undef __PIN_CTRL_REG__
