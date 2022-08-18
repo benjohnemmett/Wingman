@@ -80,6 +80,7 @@ void platform_specific_write_string(char* string) {
 
 ISR(PORTA_PORT_vect) {
     uint8_t pins = PORTA.IN;
+    uint8_t flags_to_clear = 0;
     
     if (PORTA.INTFLAGS & PWM_IN_1_PIN_bm) {
         if (pins & PWM_IN_1_PIN_bm) {
@@ -87,7 +88,7 @@ ISR(PORTA_PORT_vect) {
         } else {
             input_capture.ch1_pulse_width_us = TCB0.CNT/10;
         }
-        PORTA.INTFLAGS |= PWM_IN_1_PIN_bm;
+        flags_to_clear |= PWM_IN_1_PIN_bm;
     }
     if (PORTA.INTFLAGS & PWM_IN_2_PIN_bm) {
         if (pins & PWM_IN_2_PIN_bm) {
@@ -95,7 +96,7 @@ ISR(PORTA_PORT_vect) {
         } else {
             input_capture.ch2_pulse_width_us = TCB1.CNT/10;
         }
-        PORTA.INTFLAGS |= PWM_IN_2_PIN_bm;
+        flags_to_clear |= PWM_IN_2_PIN_bm;
     }
     if (PORTA.INTFLAGS & PWM_IN_3_PIN_bm) {
         if (pins & PWM_IN_3_PIN_bm) {
@@ -103,7 +104,7 @@ ISR(PORTA_PORT_vect) {
         } else {
             input_capture.ch3_pulse_width_us = TCB2.CNT/10;
         }
-        PORTA.INTFLAGS |= PWM_IN_3_PIN_bm;
+        flags_to_clear |= PWM_IN_3_PIN_bm;
     }
     if (PORTA.INTFLAGS & PWM_IN_4_PIN_bm) {
         if (pins & PWM_IN_4_PIN_bm) {
@@ -111,8 +112,9 @@ ISR(PORTA_PORT_vect) {
         } else {
             input_capture.ch4_pulse_width_us = TCB3.CNT/10;
         }
-        PORTA.INTFLAGS |= PWM_IN_4_PIN_bm;
+        flags_to_clear |= PWM_IN_4_PIN_bm;
     }
+    PORTA.INTFLAGS |= flags_to_clear;
 }
 
 #undef __PIN_CTRL_REG__
