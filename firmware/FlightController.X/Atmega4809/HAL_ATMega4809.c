@@ -20,6 +20,8 @@
 #define SERVO_PWM_PERIOD_US 20000
 #define SERVO_PWM_PERIOD_TICKS_DIV16 25000
 
+#define INT_TRANSITION_CYCLES 8
+
 extern volatile PwmInputCapture pwm_input_capture;
 extern volatile PwmOutputData pwm_output_data;
 
@@ -74,16 +76,16 @@ void platform_specific_setup() {
  *************************************************************/
 void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output) {
     cli();
-    output->pulse_ticks[0] = (unsigned int)((float)input->ch1_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16);
-    output->pulse_ticks[1] = (unsigned int)((float)input->ch2_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16);
-    output->pulse_ticks[2] = (unsigned int)((float)input->ch3_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16);
-    output->pulse_ticks[3] = (unsigned int)((float)input->ch4_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16);
+    output->pulse_ticks[0] = (unsigned int)((float)input->ch1_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
+    output->pulse_ticks[1] = (unsigned int)((float)input->ch2_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
+    output->pulse_ticks[2] = (unsigned int)((float)input->ch3_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
+    output->pulse_ticks[3] = (unsigned int)((float)input->ch4_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
     unsigned int all_channels_sum_us = input->ch1_pulse_width_us + 
                                         input->ch2_pulse_width_us + 
                                         input->ch3_pulse_width_us + 
                                         input->ch4_pulse_width_us;
     if (all_channels_sum_us < SERVO_PWM_PERIOD_US) {
-        output->pulse_ticks[4] = (SERVO_PWM_PERIOD_US - all_channels_sum_us) * MICROS_TO_TCA_TICKS_DIV16;
+        output->pulse_ticks[4] = ((unsigned int)((float)(SERVO_PWM_PERIOD_US - all_channels_sum_us)) * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
     } else {
         output->pulse_ticks[4] = 0;
     }
@@ -153,7 +155,6 @@ void platform_specific_write_string(char* string) {
 ISR(TCA0_CMP0_vect) {
     TCA0.SINGLE.INTFLAGS |= TCA_SINGLE_CMP0_bm; // clear interrupt flag
     
-    TCA0.SINGLE.CNT = 0; // Reset the timer
     uint8_t next_channel = pwm_output_data.current_channel + 1;
     
     if (pwm_output_data.current_channel == 0) {
@@ -172,6 +173,7 @@ ISR(TCA0_CMP0_vect) {
         next_channel = 0;
     }
     
+    TCA0.SINGLE.CNT = 0; // Reset the timer
     TCA0.SINGLE.CMP0 = pwm_output_data.pulse_ticks[next_channel];
     pwm_output_data.current_channel = next_channel;
 }
