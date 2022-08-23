@@ -26,6 +26,18 @@
 #define PWM_IN_4_PIN 5
 #define PWM_IN_4_PIN_bm (0x01 << PWM_IN_4_PIN)
 
+#define PWM_OUT_1_PORT F
+#define PWM_OUT_1_PIN 2
+#define PWM_OUT_1_PIN_bm
+#define PWM_OUT_2_PORT F
+#define PWM_OUT_2_PIN 3
+#define PWM_OUT_3_PORT F
+#define PWM_OUT_3_PIN 4
+#define PWM_OUT_4_PORT F
+#define PWM_OUT_4_PIN 5
+
+#define BIT_VAL(pin) (0x01 << pin)
+
 #define UART_TX_PORT A
 #define UART_TX_PIN 0
 #define UART_RX_PORT A
@@ -40,6 +52,8 @@ void platform_specific_setup();
 void platform_specific_test();
 
 void platform_specific_write_string(char* string);
+
+void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output);
 
 #ifdef	__cplusplus
 }

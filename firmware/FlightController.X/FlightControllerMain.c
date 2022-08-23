@@ -13,7 +13,8 @@
 PidControllerState rollPid;
 PidControllerState pitchPid;
 
-volatile PwmInputCapture input_capture;
+volatile PwmInputCapture pwm_input_capture;
+volatile PwmOutputData pwm_output_data;
 
 volatile uint8_t update_timer_expired = 0;
 
@@ -26,7 +27,6 @@ int main(void) {
     // Initialize I2C for PWM controller
     
     //Start Update timer
-    
     while (1) {
         // Wait for TBD ms update period
         while (!update_timer_expired) {
@@ -45,6 +45,6 @@ int main(void) {
         float pitchCommand = RunPidController(&pitchPid, pitchError, UPDATE_PERIOD_MS);
         
         // Update PWM controller
-        
+        //platform_specific_update_pwm_output(&pwm_input_capture, &pwm_output_data);
     }
 }

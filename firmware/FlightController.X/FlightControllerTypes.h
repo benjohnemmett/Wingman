@@ -20,6 +20,12 @@ extern "C" {
     };
     typedef struct PwmInputCapture PwmInputCapture;
 
+    struct PwmOutputData {
+        unsigned int pulse_ticks[5];
+        char current_channel;
+    };
+    typedef struct PwmOutputData PwmOutputData;
+    
 
 #ifdef	__cplusplus
 }
