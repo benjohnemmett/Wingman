@@ -21,7 +21,7 @@ volatile uint8_t update_timer_expired = 0;
 int main(void) {
     platform_specific_setup();
     platform_specific_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
-    platform_specific_test();
+    //platform_specific_test();
     
     // Initialize I2C for IMU
     // Initialize I2C for PWM controller
@@ -29,9 +29,9 @@ int main(void) {
     //Start Update timer
     while (1) {
         // Wait for TBD ms update period
-        while (!update_timer_expired) {
-        }
-        update_timer_expired = 0;
+//        while (!update_timer_expired) {
+//        }
+//        update_timer_expired = 0;
         
         // Get updated body state from IMU
         
@@ -45,6 +45,7 @@ int main(void) {
         float pitchCommand = RunPidController(&pitchPid, pitchError, UPDATE_PERIOD_MS);
         
         // Update PWM controller
-        //platform_specific_update_pwm_output(&pwm_input_capture, &pwm_output_data);
+        platform_specific_update_pwm_output(&pwm_input_capture, &pwm_output_data);
+        platform_specific_print_test_data();
     }
 }

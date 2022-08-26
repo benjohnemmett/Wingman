@@ -22,6 +22,9 @@
 
 #define INT_TRANSITION_CYCLES 8
 
+#define ENABLE_TIMER_A() TCA0.SINGLE.CTRLA |= 0x01
+#define DISABLE_TIMER_A() TCA0.SINGLE.CTRLA &= ~0x01
+
 extern volatile PwmInputCapture pwm_input_capture;
 extern volatile PwmOutputData pwm_output_data;
 
@@ -122,7 +125,7 @@ void print_pwm_input_capture() {
  * Blink a light and print test data
  */
 void platform_specific_test() {
-    PORTE.DIRSET = PIN3_bm; // Set as output
+    PORTA.DIRSET = PIN4_bm; // Set as output
     
     volatile PwmInputCapture test_input;
     test_input.ch1_pulse_width_us = 1000;
@@ -136,9 +139,13 @@ void platform_specific_test() {
     uart0_send_string((char*)"Begin UART0 Test...\r\n\0");
     
     while (1) {
-        PORTE.OUTTGL = PIN3_bm;
+        PORTA.OUTTGL = PIN4_bm;
         print_pwm_input_capture();
     }
+}
+
+void platform_specific_print_test_data() {
+    print_pwm_input_capture();
 }
 
 /* 
@@ -153,8 +160,8 @@ void platform_specific_write_string(char* string) {
  * ISRs 
  *************************************************************/
 ISR(TCA0_CMP0_vect) {
+    DISABLE_TIMER_A();
     TCA0.SINGLE.INTFLAGS |= TCA_SINGLE_CMP0_bm; // clear interrupt flag
-    
     uint8_t next_channel = pwm_output_data.current_channel + 1;
     
     if (pwm_output_data.current_channel == 0) {
@@ -172,10 +179,11 @@ ISR(TCA0_CMP0_vect) {
         __SET_OUTPUT_HIGH__(PWM_OUT_1_PORT, PWM_OUT_1_PIN);
         next_channel = 0;
     }
+    pwm_output_data.current_channel = next_channel;
     
     TCA0.SINGLE.CNT = 0; // Reset the timer
     TCA0.SINGLE.CMP0 = pwm_output_data.pulse_ticks[next_channel];
-    pwm_output_data.current_channel = next_channel;
+    ENABLE_TIMER_A();
 }
 
 ISR(PORTA_PORT_vect) {
@@ -197,6 +205,12 @@ ISR(PORTA_PORT_vect) {
             pwm_input_capture.ch2_pulse_width_us = TCB1.CNT/10;
         }
     }
+}
+
+ISR(PORTB_PORT_vect) {
+    uint8_t pins = PORTB.IN;
+    uint8_t interrupt_flags = PORTB.INTFLAGS; // store active flags
+    PORTB.INTFLAGS = interrupt_flags; // Clear active flags
     if (interrupt_flags & PWM_IN_3_PIN_bm) {
         if (pins & PWM_IN_3_PIN_bm) {
             TCB2.CNT = 0;
