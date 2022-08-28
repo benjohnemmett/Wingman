@@ -46,6 +46,6 @@ int main(void) {
         
         // Update PWM controller
         platform_specific_update_pwm_output(&pwm_input_capture, &pwm_output_data);
-        platform_specific_print_test_data();
+        //platform_specific_print_test_data();
     }
 }

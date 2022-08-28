@@ -17,6 +17,8 @@
 
 #define MICROS_TO_TCA_TICKS_DIV8 2.5
 #define MICROS_TO_TCA_TICKS_DIV16 1.25
+#define TCA_CLOCKSEL TCA_SINGLE_CLKSEL_DIV16_gc
+#define MICROS_TO_TCA_TICKS MICROS_TO_TCA_TICKS_DIV16
 #define SERVO_PWM_PERIOD_US 20000
 #define SERVO_PWM_PERIOD_TICKS_DIV16 25000
 
@@ -38,9 +40,9 @@ static void setup_output_pwm() {
     __CONFIGURE_PIN_AS_OUTPUT__(PWM_OUT_4_PORT, PWM_OUT_4_PIN);
     
     TCA0.SINGLE.PER = 0xFFFF; // Set to max, should never reach this though
-    TCA0.SINGLE.CMP0 = 500 * MICROS_TO_TCA_TICKS_DIV16; // default value
+    TCA0.SINGLE.CMP0 = 500 * MICROS_TO_TCA_TICKS; // default value
     TCA0.SINGLE.INTCTRL |= TCA_SINGLE_CMP0_bm;
-    TCA0.SINGLE.CTRLA = TCA_SINGLE_CLKSEL_DIV16_gc | 0x01;
+    TCA0.SINGLE.CTRLA = TCA_CLOCKSEL | 0x01;
 }
 
 static void setup_input_capture() {
@@ -79,20 +81,73 @@ void platform_specific_setup() {
  *************************************************************/
 void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output) {
     cli();
-    output->pulse_ticks[0] = (unsigned int)((float)input->ch1_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
-    output->pulse_ticks[1] = (unsigned int)((float)input->ch2_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
-    output->pulse_ticks[2] = (unsigned int)((float)input->ch3_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
-    output->pulse_ticks[3] = (unsigned int)((float)input->ch4_pulse_width_us * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
-    unsigned int all_channels_sum_us = input->ch1_pulse_width_us + 
-                                        input->ch2_pulse_width_us + 
-                                        input->ch3_pulse_width_us + 
-                                        input->ch4_pulse_width_us;
-    if (all_channels_sum_us < SERVO_PWM_PERIOD_US) {
-        output->pulse_ticks[4] = ((unsigned int)((float)(SERVO_PWM_PERIOD_US - all_channels_sum_us)) * MICROS_TO_TCA_TICKS_DIV16) - INT_TRANSITION_CYCLES;
-    } else {
-        output->pulse_ticks[4] = 0;
-    }
+    uint16_t in_1 = input->ch1_pulse_width_us;
+    uint16_t in_2 = input->ch2_pulse_width_us;
+    uint16_t in_3 = input->ch3_pulse_width_us;
+    uint16_t in_4 = input->ch4_pulse_width_us;
     sei();
+    
+    // Clamp inputs
+    if (in_1 > 2000) {
+        in_1 = 2000;
+    } else if (in_1 < 1000) {
+        in_1 = 1000;
+    }
+    if (in_2 > 2000) {
+        in_2 = 2000;
+    } else if (in_2 < 1000) {
+        in_2 = 1000;
+    }
+    if (in_3 > 2000) {
+        in_3 = 2000;
+    } else if (in_3 < 1000) {
+        in_3 = 1000;
+    }
+    if (in_4 > 2000) {
+        in_4 = 2000;
+    } else if (in_4 < 1000) {
+        in_4 = 1000;
+    }
+    
+#if TCA_CLOCKSEL == TCA_SINGLE_CLKSEL_DIV16_gc
+    // out = in * 1.25
+    uint16_t out_1 = in_1 + (in_1 >> 2) - INT_TRANSITION_CYCLES;
+    uint16_t out_2 = in_2 + (in_2 >> 2) - INT_TRANSITION_CYCLES;
+    uint16_t out_3 = in_3 + (in_3 >> 2) - INT_TRANSITION_CYCLES;
+    uint16_t out_4 = in_4 + (in_4 >> 2) - INT_TRANSITION_CYCLES;
+#elif TCA_CLOCKSEL == TCA_SINGLE_CLKSEL_DIV8_gc
+    // out = in * 2.5
+    uint16_t out_1 = 2*in_1 + (in_1 >> 1) - INT_TRANSITION_CYCLES;
+    uint16_t out_2 = 2*in_2 + (in_2 >> 1) - INT_TRANSITION_CYCLES;
+    uint16_t out_3 = 2*in_3 + (in_3 >> 1) - INT_TRANSITION_CYCLES;
+    uint16_t out_4 = 2*in_4 + (in_4 >> 1) - INT_TRANSITION_CYCLES;
+#else
+    uint16_t out_1 = (uint16_t)((float)in_1 * MICROS_TO_TCA_TICKS) - INT_TRANSITION_CYCLES;
+    uint16_t out_2 = (uint16_t)((float)in_2 * MICROS_TO_TCA_TICKS) - INT_TRANSITION_CYCLES;
+    uint16_t out_3 = (uint16_t)((float)in_3 * MICROS_TO_TCA_TICKS) - INT_TRANSITION_CYCLES;
+    uint16_t out_4 = (uint16_t)((float)in_4 * MICROS_TO_TCA_TICKS) - INT_TRANSITION_CYCLES;
+#endif
+    
+    uint32_t all_channels_sum_us = in_1 + 
+                                        in_2 + 
+                                        in_3 + 
+                                        in_4;
+    uint16_t out_extra;
+    if (all_channels_sum_us < SERVO_PWM_PERIOD_US) {
+        out_extra = ((unsigned int)((float)(SERVO_PWM_PERIOD_US - all_channels_sum_us)) * MICROS_TO_TCA_TICKS) - INT_TRANSITION_CYCLES;
+    } else {
+        out_extra = 0;
+    }
+    
+    cli();
+    output->pulse_ticks[0] = out_1;
+    output->pulse_ticks[1] = out_2;
+    output->pulse_ticks[2] = out_3;
+    output->pulse_ticks[3] = out_4;
+    output->pulse_ticks[4] = out_extra;
+    sei();
+    
+    _delay_ms(50);
 }
 
 /*************************************************************
