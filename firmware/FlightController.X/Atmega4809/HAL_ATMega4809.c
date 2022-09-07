@@ -1,6 +1,6 @@
 
 #include "HAL_ATMega4809.h"
-#include "uart.h"
+#include "../../Libraries/atmega4809-stuff/UART.X/uart.h"
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
@@ -68,7 +68,7 @@ void platform_specific_setup() {
     CCP = CCP_IOREG_gc; //Configuration Change Protection
     CLKCTRL.MCLKCTRLB = 0; //Clock Div = 1
     
-    uart0_init();
+    uart0_init(9600);
     
     setup_input_capture();
     setup_output_pwm();

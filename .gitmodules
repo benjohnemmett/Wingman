@@ -1,0 +1,3 @@
+[submodule "firmware/Libraries/atmega4809-stuff"]
+	path = firmware/Libraries/atmega4809-stuff
+	url = git@github.com:benjohnemmett/atmega4809-stuff.git

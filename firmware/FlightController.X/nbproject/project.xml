@@ -11,7 +11,10 @@
             <header-extensions>h</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
-            <make-dep-projects/>
+            <make-dep-projects>
+                <make-dep-project>../Libraries/atmega4809-stuff/I2C.X</make-dep-project>
+                <make-dep-project>../Libraries/atmega4809-stuff/UART.X</make-dep-project>
+            </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>Atmega4809</sourceRootElem>
             </sourceRootList>

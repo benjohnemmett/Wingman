@@ -18,8 +18,6 @@
       <itemPath>FlightControllerMain.c</itemPath>
       <itemPath>PidController.h</itemPath>
       <itemPath>PidController.c</itemPath>
-      <itemPath>Atmega4809/uart.h</itemPath>
-      <itemPath>Atmega4809/uart.c</itemPath>
       <itemPath>FlightControllerTypes.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -52,6 +50,40 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../Libraries/atmega4809-stuff/I2C.X"
+                            CT="3"
+                            CN="default"
+                            AC="true"
+                            BL="true"
+                            WD="../Libraries/atmega4809-stuff/I2C.X"
+                            BC="${MAKE}  -f Makefile CONF=default"
+                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
+                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
+                            OP="dist/default/production/I2C.X.a"
+                            DOP="dist/default/debug/I2C.X.a"
+                            FL="dist/default/production/I2C.X.a"
+                            PD="dist/default/production/I2C.X.a"
+                            DD="dist/default/debug/I2C.X.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../Libraries/atmega4809-stuff/UART.X"
+                            CT="3"
+                            CN="default"
+                            AC="true"
+                            BL="true"
+                            WD="../Libraries/atmega4809-stuff/UART.X"
+                            BC="${MAKE}  -f Makefile CONF=default"
+                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
+                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
+                            OP="dist/default/production/UART.X.a"
+                            DOP="dist/default/debug/UART.X.a"
+                            FL="dist/default/production/UART.X.a"
+                            PD="dist/default/production/UART.X.a"
+                            DD="dist/default/debug/UART.X.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
