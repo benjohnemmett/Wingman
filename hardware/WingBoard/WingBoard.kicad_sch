@@ -874,6 +874,11 @@
     (effects (font (size 2 2) bold) (justify left bottom))
     (uuid 9692c82a-f997-4ae8-9813-0f2c2e769fc8)
   )
+  (text "*** TODO Move these inputs to avoid using the RESET pin \nas GPIO. Maybe add a 6th output pin as well. "
+    (at 111.76 90.17 0)
+    (effects (font (size 1.27 1.27) bold) (justify left bottom))
+    (uuid a4e2289d-e9f3-43a7-b4ba-d707a1df5b8d)
+  )
 
   (label "UPDI_PIN" (at 115.57 72.39 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
@@ -1591,6 +1596,9 @@
     (path "/6a35db6a-2443-4934-934e-1d3c0655ef05"
       (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
     )
+    (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/6a814641-d20c-418e-bbf6-ee1c84b98cad"
+      (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
+    )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/6fb03914-ff97-4a61-9273-9addb35c7176"
       (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
     )
@@ -1649,6 +1657,15 @@
       (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
     )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/c9cc8a71-48a7-433b-bf8b-8ef911e210e9"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/caa19d0f-3ce8-416e-bb63-fc48f119bca8"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/ccb53472-8d23-471d-b2ec-caf44c144929"
+      (reference "#PWR?") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/d00ec237-131f-4e59-a480-f807d62e1309"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/d23c6e59-cc6d-468e-8847-c3cbf6d7174c"
@@ -1753,6 +1770,9 @@
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/3c7e16c9-be2d-4d20-ad1a-abd28f244cb4"
       (reference "J?") (unit 1) (value "PWM_IN2") (footprint "")
     )
+    (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/5cc5677a-8af6-4030-9d19-2ee131f6671a"
+      (reference "J?") (unit 1) (value "I2C_X_5V") (footprint "")
+    )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/814f2db9-0947-4f62-a212-136e66c5dfa2"
       (reference "J?") (unit 1) (value "PWM_IN1") (footprint "")
     )
@@ -1788,6 +1808,9 @@
     )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/f22d834e-6342-4953-822f-e1b202484f08"
       (reference "J?") (unit 1) (value "PWM_IN3") (footprint "")
+    )
+    (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/f9357d31-2708-45a1-b765-33a95a94766e"
+      (reference "J?") (unit 1) (value "I2C_X_5V") (footprint "")
     )
     (path "/fd764008-cb4d-4b17-a97c-334a95d80dd4"
       (reference "J?") (unit 1) (value "UPDI") (footprint "")
