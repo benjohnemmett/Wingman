@@ -671,6 +671,10 @@
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 32acf52c-8ec6-4141-9e88-5b5c71f7e0c3)
   )
+  (wire (pts (xy 137.16 90.17) (xy 142.24 90.17))
+    (stroke (width 0) (type default) (color 0 0 0 0))
+    (uuid 3cb3f076-d7e1-44a4-866a-641365dcac9c)
+  )
   (wire (pts (xy 266.7 80.01) (xy 266.7 78.74))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 413b949f-f2ed-4ecc-8b6c-331ec70ecaa8)
@@ -691,7 +695,7 @@
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 53ec2050-0336-4bef-881c-b20fef48ae64)
   )
-  (wire (pts (xy 139.7 85.09) (xy 142.24 85.09))
+  (wire (pts (xy 137.16 85.09) (xy 142.24 85.09))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 5546c49e-19ba-4f36-a244-8f812dfc8952)
   )
@@ -702,10 +706,6 @@
   (wire (pts (xy 149.86 55.88) (xy 157.48 55.88))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 630f7e59-f0b8-44e4-9851-b5bd3e243b83)
-  )
-  (wire (pts (xy 139.7 90.17) (xy 142.24 90.17))
-    (stroke (width 0) (type default) (color 0 0 0 0))
-    (uuid 63fce43d-0421-4f24-b5a4-84ffc3550e5e)
   )
   (wire (pts (xy 241.3 40.64) (xy 241.3 46.99))
     (stroke (width 0) (type default) (color 0 0 0 0))
@@ -746,10 +746,6 @@
   (wire (pts (xy 160.02 63.5) (xy 160.02 67.31))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid a47b0e93-51b2-4abd-aafe-86c8b28d245e)
-  )
-  (wire (pts (xy 139.7 92.71) (xy 142.24 92.71))
-    (stroke (width 0) (type default) (color 0 0 0 0))
-    (uuid a4ed6b0e-b80f-41a2-8780-38a3a61a7486)
   )
   (wire (pts (xy 266.7 78.74) (xy 256.54 78.74))
     (stroke (width 0) (type default) (color 0 0 0 0))
@@ -815,7 +811,7 @@
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid d8761526-698d-4576-892a-b3c743769e8f)
   )
-  (wire (pts (xy 139.7 87.63) (xy 142.24 87.63))
+  (wire (pts (xy 137.16 87.63) (xy 142.24 87.63))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid de9e27e6-6b2e-48c9-ad17-ec37d7413e06)
   )
@@ -827,7 +823,7 @@
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid e79dfd28-3358-4f7e-8f60-cda8a3ad21ba)
   )
-  (wire (pts (xy 139.7 82.55) (xy 142.24 82.55))
+  (wire (pts (xy 137.16 82.55) (xy 142.24 82.55))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid ea0c608e-e94e-4107-8ad6-a1b1841bf26a)
   )
@@ -874,11 +870,6 @@
     (effects (font (size 2 2) bold) (justify left bottom))
     (uuid 9692c82a-f997-4ae8-9813-0f2c2e769fc8)
   )
-  (text "*** TODO Move these inputs to avoid using the RESET pin \nas GPIO. Maybe add a 6th output pin as well. "
-    (at 111.76 90.17 0)
-    (effects (font (size 1.27 1.27) bold) (justify left bottom))
-    (uuid a4e2289d-e9f3-43a7-b4ba-d707a1df5b8d)
-  )
 
   (label "UPDI_PIN" (at 115.57 72.39 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
@@ -889,10 +880,10 @@
     (uuid 6da83db7-51df-4e7b-b21c-5e6f179d16c7)
   )
 
-  (global_label "PWM_OUT_2" (shape output) (at 139.7 85.09 180) (fields_autoplaced)
+  (global_label "MCU_PWM_OUT_2" (shape output) (at 137.16 85.09 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27) bold) (justify right))
     (uuid 03e67dd6-9076-461f-bba0-1203303d4e56)
-    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 126.1503 84.963 0)
+    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 118.5908 84.963 0)
       (effects (font (size 1.27 1.27) bold) (justify right) hide)
     )
   )
@@ -945,10 +936,10 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
-  (global_label "PWM_OUT_4" (shape output) (at 139.7 90.17 180) (fields_autoplaced)
+  (global_label "MCU_PWM_OUT_4" (shape output) (at 137.16 90.17 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27) bold) (justify right))
     (uuid 86b01f3b-3458-4635-9616-cbc9fb4b77d1)
-    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 126.1503 90.043 0)
+    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 118.5908 90.043 0)
       (effects (font (size 1.27 1.27) bold) (justify right) hide)
     )
   )
@@ -973,10 +964,10 @@
       (effects (font (size 1.27 1.27) bold) (justify left) hide)
     )
   )
-  (global_label "PWM_OUT_3" (shape output) (at 139.7 87.63 180) (fields_autoplaced)
+  (global_label "MCU_PWM_OUT_3" (shape output) (at 137.16 87.63 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27) bold) (justify right))
     (uuid b7fb31aa-9f4c-488f-bd05-d57f5cb07700)
-    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 126.1503 87.503 0)
+    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 118.5908 87.503 0)
       (effects (font (size 1.27 1.27) bold) (justify right) hide)
     )
   )
@@ -987,10 +978,10 @@
       (effects (font (size 1 1)) (justify left) hide)
     )
   )
-  (global_label "PWM_OUT_1" (shape output) (at 139.7 82.55 180) (fields_autoplaced)
+  (global_label "MCU_PWM_OUT_1" (shape output) (at 137.16 82.55 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27) bold) (justify right))
     (uuid bc91fa9c-0934-42c5-aaf0-e7dcbff06fcc)
-    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 126.1503 82.423 0)
+    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 118.5908 82.423 0)
       (effects (font (size 1.27 1.27) bold) (justify right) hide)
     )
   )
@@ -999,13 +990,6 @@
     (uuid da3014fb-76c7-4cdb-9c82-5668e334c902)
     (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 188.7633 74.8675 0)
       (effects (font (size 1 1)) (justify left) hide)
-    )
-  )
-  (global_label "PWM_OUT_5" (shape output) (at 139.7 92.71 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27) bold) (justify right))
-    (uuid dedc5aa5-0540-4f55-92f3-e231bc5deba9)
-    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 126.1503 92.583 0)
-      (effects (font (size 1.27 1.27) bold) (justify right) hide)
     )
   )
   (global_label "I2C_SDA" (shape bidirectional) (at 201.93 77.47 0) (fields_autoplaced)
@@ -1477,14 +1461,14 @@
     (pin "3" (uuid 8818bf64-0db6-4199-9ab8-b292beb3ee8b))
   )
 
-  (sheet (at 38.1 119.38) (size 50.8 25.4) (fields_autoplaced)
+  (sheet (at 38.1 110.49) (size 50.8 25.4) (fields_autoplaced)
     (stroke (width 0.1524) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 4e596909-8b66-4241-be1c-98ec74d77d36)
-    (property "Sheet name" "PWM Connections" (id 0) (at 38.1 118.6684 0)
+    (property "Sheet name" "PWM Connections" (id 0) (at 38.1 109.7784 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "pwm_connections.kicad_sch" (id 1) (at 38.1 145.3646 0)
+    (property "Sheet file" "pwm_connections.kicad_sch" (id 1) (at 38.1 136.4746 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
@@ -1501,14 +1485,26 @@
     )
   )
 
-  (sheet (at 38.1 25.4) (size 50.8 25.4) (fields_autoplaced)
+  (sheet (at 38.1 31.75) (size 50.8 25.4) (fields_autoplaced)
     (stroke (width 0.5) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 7d003a0c-bec3-4bcf-bfcd-49935645a638)
-    (property "Sheet name" "Power Assembly" (id 0) (at 38.1 24.5146 0)
+    (property "Sheet name" "Power Assembly" (id 0) (at 38.1 30.8646 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "power_assembly.kicad_sch" (id 1) (at 38.1 51.5584 0)
+    (property "Sheet file" "power_assembly.kicad_sch" (id 1) (at 38.1 57.9084 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+  )
+
+  (sheet (at 38.1 148.59) (size 50.8 25.4) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid) (color 0 0 0 0))
+    (fill (color 0 0 0 0.0000))
+    (uuid c190336e-0c78-4dc5-a10e-35d051a88979)
+    (property "Sheet name" "Control Override" (id 0) (at 38.1 147.8784 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheet file" "control_override.kicad_sch" (id 1) (at 38.1 174.5746 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
@@ -1518,6 +1514,7 @@
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638" (page "2"))
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633" (page "3"))
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36" (page "4"))
+    (path "/c190336e-0c78-4dc5-a10e-35d051a88979" (page "5"))
   )
 
   (symbol_instances
@@ -1535,6 +1532,9 @@
     )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/1067494a-3102-4950-b96f-a9032c5324e9"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/18b95048-67f3-40dd-a1c1-2e1b2f4b8b79"
+      (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
     )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/19f86099-61c8-4bd6-9260-da80b5276c0a"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
@@ -1560,11 +1560,11 @@
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/37a82bb5-d1af-4b11-9106-dd703d97b04a"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
-    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/452bfe7c-5bd1-474a-92d0-02b9d6f1307d"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
-    )
     (path "/4c4e7838-2f07-4d9b-9c1d-dc0495397a5c"
       (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
+    )
+    (path "/c190336e-0c78-4dc5-a10e-35d051a88979/4f09eab8-0f0e-456e-b90c-02a70f9bff87"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/53281c66-7fda-470e-8b84-37a2efc5482e"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
@@ -1601,6 +1601,15 @@
     )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/6fb03914-ff97-4a61-9273-9addb35c7176"
       (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/6fe42ac3-c537-46a9-9c00-69a14ec5c0d7"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/c190336e-0c78-4dc5-a10e-35d051a88979/71b6c8d9-c76d-4b91-aff8-7da6c8f4b4f1"
+      (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
+    )
+    (path "/c190336e-0c78-4dc5-a10e-35d051a88979/75e3b151-8426-4177-9f93-b1d1d2ce8226"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/779a912c-9cb7-4387-bed8-21dba40920ba"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
@@ -1647,14 +1656,23 @@
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/acd0a856-052f-4111-a95e-9617c02f3a5f"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/b4ee489a-d719-4eee-9053-466aef14ecaf"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/b75f11d8-6cd5-4ff4-a864-7fff1b23dcf6"
       (reference "#PWR?") (unit 1) (value "+5VA") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/b9cf5475-9a3a-45c9-bc28-4a4a2b105c72"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/ba330a1f-38e8-4c16-bc13-69e26191370c"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/bdc8c706-dd7b-4646-840b-b78bfa08442a"
       (reference "#PWR?") (unit 1) (value "VDD") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/bef3b79e-6ce5-4d6d-ade2-53ce90b7aaac"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/c9cc8a71-48a7-433b-bf8b-8ef911e210e9"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
@@ -1670,9 +1688,6 @@
     )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/d23c6e59-cc6d-468e-8847-c3cbf6d7174c"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/d6490cc6-5472-475d-b9b3-10595a733b9e"
-      (reference "#PWR?") (unit 1) (value "+5VA") (footprint "")
     )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/d77f44fe-8eb1-468a-a71b-ae4dc04b3bfa"
       (reference "#PWR?") (unit 1) (value "+5VA") (footprint "")
@@ -1694,6 +1709,9 @@
     )
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/de49305a-ec09-497b-8005-9cdaf8541640"
       (reference "#PWR?") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/e058c377-ff39-4183-b2f5-497bd30f0c15"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/e14dbeb4-0e88-4f6f-aa57-f6ad97d61edb"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
@@ -1725,6 +1743,9 @@
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/ae5b7f79-a1f4-4696-a97a-1e0b2ae0d682"
       (reference "BT?") (unit 1) (value "Battery") (footprint "")
     )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/17ba397f-0040-4709-baba-9b30199a8b48"
+      (reference "C?") (unit 1) (value "10u") (footprint "")
+    )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/517a11e5-932c-4901-a90c-fbcd0cfefca4"
       (reference "C?") (unit 1) (value "10u") (footprint "")
     )
@@ -1732,6 +1753,9 @@
       (reference "C?") (unit 1) (value "22u") (footprint "")
     )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/6af7c893-5d0d-4865-82d3-171016968d6d"
+      (reference "C?") (unit 1) (value "10u") (footprint "")
+    )
+    (path "/c190336e-0c78-4dc5-a10e-35d051a88979/7cfdef54-eaf6-4b5f-9843-6c9889945282"
       (reference "C?") (unit 1) (value "10u") (footprint "")
     )
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/82580cf1-162b-4294-a757-8f924c303eb9"
@@ -1803,9 +1827,6 @@
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/df615fc1-993c-477e-bdd9-e735a1d5d4f6"
       (reference "J?") (unit 1) (value "PWM_OUT4") (footprint "")
     )
-    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/e82012ff-bf64-413a-ae4d-81fd359f7f22"
-      (reference "J?") (unit 1) (value "PWM_OUT5") (footprint "")
-    )
     (path "/4e596909-8b66-4241-be1c-98ec74d77d36/f22d834e-6342-4953-822f-e1b202484f08"
       (reference "J?") (unit 1) (value "PWM_IN3") (footprint "")
     )
@@ -1815,8 +1836,20 @@
     (path "/fd764008-cb4d-4b17-a97c-334a95d80dd4"
       (reference "J?") (unit 1) (value "UPDI") (footprint "")
     )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/16ac3113-ab81-42be-a6da-b2ffa9691fcc"
+      (reference "JP?") (unit 1) (value "PWM_OUT1_BRIDGE") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/5c7e70f6-90d1-49cb-b908-6a70d758b1d4"
+      (reference "JP?") (unit 1) (value "PWM_OUT1_BRIDGE") (footprint "")
+    )
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/6c13de30-aa88-435f-84ba-8a53a68dbc5e"
       (reference "JP?") (unit 1) (value "CSB to GND") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/aa953151-20d9-4931-9be1-9b7e95aec814"
+      (reference "JP?") (unit 1) (value "PWM_OUT1_BRIDGE") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/c5eb5bbe-427f-45bb-86d1-56486218e269"
+      (reference "JP?") (unit 1) (value "PWM_OUT1_BRIDGE") (footprint "")
     )
     (path "/65d0734d-0a9b-4de3-a1fd-6529edb3e633/5c3fdde0-9b26-41eb-ad30-e6112c8ad063"
       (reference "Q?") (unit 1) (value "BSS138") (footprint "Package_TO_SOT_SMD:SOT-23")
@@ -1836,11 +1869,26 @@
     (path "/7b5550b1-6cf5-4eb5-b60b-8ba8c2549937"
       (reference "R?") (unit 1) (value "10k") (footprint "")
     )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/90b9af5d-7565-4c09-9c39-409220590492"
+      (reference "R?") (unit 1) (value "220") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/a49634d0-7b32-4466-b2bb-d0294f27ba26"
+      (reference "R?") (unit 1) (value "10k") (footprint "")
+    )
     (path "/bf861f03-057c-4606-a987-3eb08aac3dd6"
       (reference "R?") (unit 1) (value "50k") (footprint "")
     )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/c012a799-7e60-4c05-a8c1-ecea7983c880"
+      (reference "R?") (unit 1) (value "220") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/cd56bda7-413d-4f25-afce-6d14ca6a6be3"
+      (reference "R?") (unit 1) (value "220") (footprint "")
+    )
     (path "/f1532350-c8f2-4dbb-8294-03e53ffb6e9f"
       (reference "R?") (unit 1) (value "10k") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/fe511527-4cbc-4cf7-8050-6fc313533c13"
+      (reference "R?") (unit 1) (value "220") (footprint "")
     )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/baabfe52-e0fb-45ad-8c0e-fe38fddd9515"
       (reference "SW?") (unit 1) (value "SW_POWER") (footprint "")
@@ -1865,6 +1913,12 @@
     )
     (path "/7d003a0c-bec3-4bcf-bfcd-49935645a638/021d299b-ec1f-4ba4-968f-ee1ab5a25c81"
       (reference "U?") (unit 1) (value "AZ1117-3.3") (footprint "")
+    )
+    (path "/4e596909-8b66-4241-be1c-98ec74d77d36/617f9574-00c5-44de-8d74-c4ce08852ac1"
+      (reference "U?") (unit 1) (value "PCA9685PW") (footprint "Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm")
+    )
+    (path "/c190336e-0c78-4dc5-a10e-35d051a88979/684444aa-4ffb-40bb-a6a3-29c5d6480d52"
+      (reference "U?") (unit 1) (value "ATtiny85-20S") (footprint "Package_SO:SOIC-8W_5.3x5.3mm_P1.27mm")
     )
     (path "/865bf686-9ef0-442e-9c05-8ad257e64d48"
       (reference "U?") (unit 1) (value "ATmega4809-A") (footprint "Package_QFP:TQFP-48_7x7mm_P0.5mm")

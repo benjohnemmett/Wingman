@@ -332,6 +332,10 @@
     [
       "4e596909-8b66-4241-be1c-98ec74d77d36",
       "PWM Connections"
+    ],
+    [
+      "c190336e-0c78-4dc5-a10e-35d051a88979",
+      "Control Override"
     ]
   ],
   "text_variables": {}
