@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "Proj ICs")(type "KiCad")(uri "/Users/ben/Documents/KiCad/6.0/footprints/IC")(options "")(descr ""))
+  (lib (name "Proj Sensors")(type "KiCad")(uri "/Users/ben/Documents/KiCad/6.0/footprints/Sensors")(options "")(descr ""))
+)
