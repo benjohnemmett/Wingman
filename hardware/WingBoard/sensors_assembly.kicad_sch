@@ -1160,7 +1160,8 @@
     (uuid fd4a9d54-a758-457d-a456-e3f7cdba3483)
   )
 
-  (text "I2C pullups on Main sheet" (at 48.26 85.09 0)
+  (text "I2C pullups are on the main sheet\nLogic level shifting based on the\nNXP paper \"Level shifting techniques in I2C-bus design\""
+    (at 50.8 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 1582c51a-14d5-4921-b5ee-5986cc5ce4e9)
   )
@@ -1420,7 +1421,7 @@
     (uuid 5c3fdde0-9b26-41eb-ad30-e6112c8ad063)
     (property "Reference" "Q301" (id 0) (at 74.93 50.8 90))
     (property "Value" "BSS138" (id 1) (at 74.93 53.34 90))
-    (property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" (id 2) (at 76.835 49.53 0)
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23" (id 2) (at 76.835 49.53 0)
       (effects (font (size 1.27 1.27) italic) (justify left) hide)
     )
     (property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF" (id 3) (at 74.93 44.45 0)
@@ -1572,7 +1573,7 @@
     (uuid 7c7c27b2-c9e3-43f1-ac04-0aeeb888ca96)
     (property "Reference" "Q302" (id 0) (at 73.66 76.2 90))
     (property "Value" "BSS138" (id 1) (at 73.66 78.74 90))
-    (property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" (id 2) (at 75.565 74.93 0)
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23" (id 2) (at 75.565 74.93 0)
       (effects (font (size 1.27 1.27) italic) (justify left) hide)
     )
     (property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF" (id 3) (at 73.66 69.85 0)
