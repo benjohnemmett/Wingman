@@ -1397,8 +1397,8 @@
     (effects (font (size 2 2) bold) (justify left bottom))
     (uuid 8489ad9b-5b50-42a8-a1ff-ad59bd69ac90)
   )
-  (text "Solder jumpers allow the FC MCU\nto directly control PWM out signals.\nThis is a backup in case of there are \nissues with the PWM Control IC."
-    (at 158.75 109.22 0)
+  (text "Solder jumpers provide the option for\nthe FC MCU to directly control \nPWM out signals with GPIO pins.\nThis is a backup in case of there are \nissues with the PWM Control IC."
+    (at 158.75 110.49 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 84b0d36e-621e-4ac6-8445-ab21c6e2d624)
   )
