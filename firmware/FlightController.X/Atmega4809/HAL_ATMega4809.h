@@ -35,6 +35,23 @@
 #define PWM_OUT_4_PORT E
 #define PWM_OUT_4_PIN 0
 
+#define STAT_LED_1_PORT D
+#define STAT_LED_1_PIN 0
+#define STAT_LED_2_PORT D
+#define STAT_LED_2_PIN 1
+#define STAT_LED_3_PORT D
+#define STAT_LED_3_PIN 2
+#define STAT_LED_4_PORT D
+#define STAT_LED_4_PIN 3
+#define STAT1_OFF() PORTD.OUT |= (1 << STAT_LED_1_PIN);
+#define STAT2_OFF() PORTD.OUT |= (1 << STAT_LED_2_PIN);
+#define STAT3_OFF() PORTD.OUT |= (1 << STAT_LED_3_PIN);
+#define STAT4_OFF() PORTD.OUT |= (1 << STAT_LED_4_PIN);
+#define STAT1_ON() PORTD.OUT &= ~(1 << STAT_LED_1_PIN);
+#define STAT2_ON() PORTD.OUT &= ~(1 << STAT_LED_2_PIN);
+#define STAT3_ON() PORTD.OUT &= ~(1 << STAT_LED_3_PIN);
+#define STAT4_ON() PORTD.OUT &= ~(1 << STAT_LED_4_PIN);
+
 #define BIT_VAL(pin) (0x01 << pin)
 
 #define UART_TX_PORT A

@@ -29,6 +29,7 @@
 
 extern volatile PwmInputCapture pwm_input_capture;
 extern volatile PwmOutputData pwm_output_data;
+volatile uint8_t *update_timer_expired_ptr;
 
 /*************************************************************
  * Setup Functions 
@@ -63,10 +64,41 @@ static void setup_input_capture() {
     TCB3.CTRLA = TCB_CLKSEL_CLKDIV2_gc | 0x01; // Enable & set to clkdiv2
 }
 
-void platform_specific_setup() {
+void setup_status_lights() {
+    __CONFIGURE_PIN_AS_OUTPUT__(STAT_LED_1_PORT, STAT_LED_1_PIN);
+    __CONFIGURE_PIN_AS_OUTPUT__(STAT_LED_2_PORT, STAT_LED_2_PIN);
+    __CONFIGURE_PIN_AS_OUTPUT__(STAT_LED_3_PORT, STAT_LED_3_PIN);
+    __CONFIGURE_PIN_AS_OUTPUT__(STAT_LED_4_PORT, STAT_LED_4_PIN);
+    
+    STAT1_OFF();
+    STAT2_OFF();
+    STAT3_OFF();
+    STAT4_OFF();
+    
+    STAT1_ON();
+    _delay_ms(100);
+    STAT1_OFF();
+    _delay_ms(10);
+    STAT2_ON();
+    _delay_ms(100);
+    STAT2_OFF();
+    _delay_ms(10);
+    STAT3_ON();
+    _delay_ms(100);
+    STAT3_OFF();
+    _delay_ms(10);
+    STAT4_ON();
+    _delay_ms(100);
+    STAT4_OFF();
+}
+
+void platform_specific_setup(uint8_t *update_timer_expired_ptr) {
+    update_timer_expired_ptr = update_timer_expired_ptr;
+    
     // Set CPU clock divider to 1
     CCP = CCP_IOREG_gc; //Configuration Change Protection
     CLKCTRL.MCLKCTRLB = 0; //Clock Div = 1
+    setup_status_lights();
     
     uart0_init(9600);
     

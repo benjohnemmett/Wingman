@@ -19,12 +19,9 @@ volatile PwmOutputData pwm_output_data;
 volatile uint8_t update_timer_expired = 0;
 
 int main(void) {
-    platform_specific_setup();
+    platform_specific_setup(&update_timer_expired);
     platform_specific_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
     //platform_specific_test();
-    
-    // Initialize I2C for IMU
-    // Initialize I2C for PWM controller
     
     //Start Update timer
     while (1) {
