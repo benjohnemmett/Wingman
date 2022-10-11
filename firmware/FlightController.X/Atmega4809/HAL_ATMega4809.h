@@ -52,12 +52,23 @@
 #define STAT3_ON() PORTD.OUT &= ~(1 << STAT_LED_3_PIN);
 #define STAT4_ON() PORTD.OUT &= ~(1 << STAT_LED_4_PIN);
 
+#define DIP1_PORT F
+#define DIP1_PIN 1
+#define DIP2_PORT F
+#define DIP2_PIN 2
+
 #define BIT_VAL(pin) (0x01 << pin)
 
 #define UART_TX_PORT A
 #define UART_TX_PIN 0
 #define UART_RX_PORT A
 #define UART_RX_PIN 1
+
+struct HardwareConfiguration{
+    uint8_t dip_1;
+    uint8_t dip_2;
+};
+typedef struct HardwareConfiguration HardwareConfiguration;
 
 #ifdef	__cplusplus
 extern "C" {

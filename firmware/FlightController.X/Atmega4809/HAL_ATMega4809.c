@@ -31,6 +31,8 @@ extern volatile PwmInputCapture pwm_input_capture;
 extern volatile PwmOutputData pwm_output_data;
 volatile uint8_t *update_timer_expired_ptr;
 
+HardwareConfiguration hw_config;
+
 /*************************************************************
  * Setup Functions 
  *************************************************************/
@@ -76,20 +78,44 @@ void setup_status_lights() {
     STAT4_OFF();
     
     STAT1_ON();
-    _delay_ms(100);
+    _delay_ms(200);
     STAT1_OFF();
-    _delay_ms(10);
     STAT2_ON();
-    _delay_ms(100);
+    _delay_ms(200);
     STAT2_OFF();
-    _delay_ms(10);
     STAT3_ON();
-    _delay_ms(100);
+    _delay_ms(200);
     STAT3_OFF();
-    _delay_ms(10);
     STAT4_ON();
-    _delay_ms(100);
+    _delay_ms(200);
     STAT4_OFF();
+    
+    if (hw_config.dip_1) {
+        uart0_send_string((char*)"DIP 1 ON\r\n");
+        STAT1_ON();
+        _delay_ms(500);
+        STAT1_OFF();
+    } else {
+        uart0_send_string((char*)"DIP 1 OFF\r\n");
+    }
+    if (hw_config.dip_2) {
+        uart0_send_string((char*)"DIP 2 ON\r\n");
+        STAT2_ON();
+        _delay_ms(500);
+        STAT2_OFF();
+    } else {
+        uart0_send_string((char*)"DIP 2 OFF\r\n");
+    }
+}
+
+void read_dip_switches() {
+    // Set internal pullups
+    PORTF.PIN1CTRL |= PORT_PULLUPEN_bm;
+    PORTF.PIN2CTRL |= PORT_PULLUPEN_bm;
+    
+    // Low assertion
+    hw_config.dip_1 = !(PORTF.IN & (1 << DIP1_PIN));
+    hw_config.dip_2 = !(PORTF.IN & (1 << DIP2_PIN));
 }
 
 void platform_specific_setup(uint8_t *update_timer_expired_ptr) {
@@ -98,9 +124,10 @@ void platform_specific_setup(uint8_t *update_timer_expired_ptr) {
     // Set CPU clock divider to 1
     CCP = CCP_IOREG_gc; //Configuration Change Protection
     CLKCTRL.MCLKCTRLB = 0; //Clock Div = 1
-    setup_status_lights();
-    
     uart0_init(9600);
+    
+    read_dip_switches();
+    setup_status_lights();
     
     setup_input_capture();
     setup_output_pwm();
