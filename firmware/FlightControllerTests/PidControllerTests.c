@@ -77,11 +77,48 @@ TEST_CASE( "I = 0.1 Constant dt", "[run]") {
     pid.Kd = 0;
     pid.integrator_min = -1.0;
     pid.integrator_max = 1.0;
+    float dt = 1.0;
     
     float inputs[]          = {1.0, 0.5, -0.3};
     float expectedOutputs[] = {0.1, 0.15, 0.12};
     
-    REQUIRE( abs(RunPidController(&pid, inputs[0], 1.0) - expectedOutputs[0]) < epsilon);
-    REQUIRE( abs(RunPidController(&pid, inputs[1], 1.0) - expectedOutputs[1]) < epsilon);
-    REQUIRE( abs(RunPidController(&pid, inputs[2], 1.0) - expectedOutputs[2]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[0], dt) - expectedOutputs[0]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[1], dt) - expectedOutputs[1]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[2], dt) - expectedOutputs[2]) < epsilon);
+}
+
+TEST_CASE( "I = 0.5 integrator upper bound", "[run]") {
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 0;
+    pid.Ki = 0.5;
+    pid.Kd = 0;
+    pid.integrator_min = -1.0;
+    pid.integrator_max = 1.0;
+    float dt = 1.0;
+    
+    float inputs[]          = {1.0, 0.5, 0.6};
+    float expectedOutputs[] = {0.5, 0.75, 1.0};
+    
+    REQUIRE( abs(RunPidController(&pid, inputs[0], dt) - expectedOutputs[0]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[1], dt) - expectedOutputs[1]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[2], dt) - expectedOutputs[2]) < epsilon);
+}
+
+TEST_CASE( "I = 0.5 integrator lower bound", "[run]") {
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 0;
+    pid.Ki = 0.5;
+    pid.Kd = 0;
+    pid.integrator_min = -1.0;
+    pid.integrator_max = 1.0;
+    float dt = 1.0;
+    
+    float inputs[]          = {-0.6, -0.5, -1.0};
+    float expectedOutputs[] = {-0.3, -0.55, -1.0};
+    
+    REQUIRE( abs(RunPidController(&pid, inputs[0], dt) - expectedOutputs[0]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[1], dt) - expectedOutputs[1]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[2], dt) - expectedOutputs[2]) < epsilon);
 }
