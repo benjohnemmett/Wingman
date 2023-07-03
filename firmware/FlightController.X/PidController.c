@@ -25,3 +25,17 @@ float RunPidController(PidControllerState *state, float error, float delta_t_ms)
     
     return correction;
 }
+
+void ResetPidControllerState(PidControllerState *state) {
+    state->Kp = 0;
+    state->Ki = 0;
+    state->Kd = 0;
+    
+    state->integrator_max = 100;
+    state->integrator_min = -100;
+    
+    state->last_error = 0;
+    state->has_last_error = 0;
+    state->integrator = 0;
+    PidControllerStatus status = PID_STATUS_OKAY;
+}

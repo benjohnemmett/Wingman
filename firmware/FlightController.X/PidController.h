@@ -34,6 +34,8 @@ extern "C" {
     typedef struct PidControllerState PidControllerState;
     
     float RunPidController(PidControllerState *state, float error, float delta_t_ms);
+
+    void ResetPidControllerState(PidControllerState *state);
     
 #ifdef	__cplusplus
 }

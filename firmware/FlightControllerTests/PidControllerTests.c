@@ -13,29 +13,34 @@
 static const float epsilon = 1e-6;
 
 TEST_CASE( "P = 1.0 Updates ", "[run]") {
-    PidControllerState pOnly;
-    pOnly.Kp = 1.0;
-    pOnly.Ki = 0.0;
-    pOnly.Kd = 0.0;
-    REQUIRE( RunPidController(&pOnly, 1.2, 1.0) == Approx(1.2));
-    REQUIRE( RunPidController(&pOnly, -1.2, 1.0) == Approx(-1.2));
-    REQUIRE( abs(RunPidController(&pOnly, 0.0, 1.0) - 0.0f) < epsilon);
-    REQUIRE( abs(RunPidController(&pOnly, 0.0, 2.0) - 0.0f) < epsilon);
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 1.0;
+    pid.Ki = 0.0;
+    pid.Kd = 0.0;
+
+    REQUIRE( RunPidController(&pid, 1.2, 1.0) == Approx(1.2));
+    REQUIRE( RunPidController(&pid, -1.2, 1.0) == Approx(-1.2));
+    REQUIRE( abs(RunPidController(&pid, 0.0, 1.0) - 0.0f) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, 0.0, 2.0) - 0.0f) < epsilon);
 }
 
 TEST_CASE( "P = 0.5 Updates ", "[run]") {
-    PidControllerState pOnly;
-    pOnly.Kp = 0.5;
-    pOnly.Ki = 0.0;
-    pOnly.Kd = 0.0;
-    REQUIRE( RunPidController(&pOnly, 1.2, 1.0) == Approx(0.6));
-    REQUIRE( RunPidController(&pOnly, -1.2, 1.0) == Approx(-0.6));
-    REQUIRE( abs(RunPidController(&pOnly, 0.0, 1.0) - 0.0f) < epsilon);
-    REQUIRE( abs(RunPidController(&pOnly, 0.0, 2.0) - 0.0f) < epsilon);
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 0.5;
+    pid.Ki = 0.0;
+    pid.Kd = 0.0;
+
+    REQUIRE( RunPidController(&pid, 1.2, 1.0) == Approx(0.6));
+    REQUIRE( RunPidController(&pid, -1.2, 1.0) == Approx(-0.6));
+    REQUIRE( abs(RunPidController(&pid, 0.0, 1.0) - 0.0f) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, 0.0, 2.0) - 0.0f) < epsilon);
 }
 
 TEST_CASE( "D = 1.0 Constant input ", "[run]") {
     PidControllerState pid;
+    ResetPidControllerState(&pid);
     pid.Kp = 0;
     pid.Ki = 0;
     pid.Kd = 1.0;
@@ -50,6 +55,7 @@ TEST_CASE( "D = 1.0 Constant input ", "[run]") {
 
 TEST_CASE( "D = 1.0 Non-constant input ", "[run]") {
     PidControllerState pid;
+    ResetPidControllerState(&pid);
     pid.Kp = 0;
     pid.Ki = 0;
     pid.Kd = 1.0;
@@ -65,6 +71,7 @@ TEST_CASE( "D = 1.0 Non-constant input ", "[run]") {
 
 TEST_CASE( "I = 0.1 Constant dt", "[run]") {
     PidControllerState pid;
+    ResetPidControllerState(&pid);
     pid.Kp = 0;
     pid.Ki = 0.1;
     pid.Kd = 0;
