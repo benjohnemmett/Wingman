@@ -38,6 +38,22 @@ TEST_CASE( "P = 0.5 Updates ", "[run]") {
     REQUIRE( abs(RunPidController(&pid, 0.0, 2.0) - 0.0f) < epsilon);
 }
 
+// P only control should be uneffected by delta time.
+TEST_CASE( "P = 0.5, dt = 0.5 Updates ", "[run]") {
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 0.5;
+    pid.Ki = 0.0;
+    pid.Kd = 0.0;
+    float dt = 0.5;
+
+    REQUIRE( RunPidController(&pid, 1.2, dt) == Approx(0.6));
+    REQUIRE( RunPidController(&pid, -1.2, dt) == Approx(-0.6));
+    REQUIRE( abs(RunPidController(&pid, 0.0, dt) - 0.0f) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, 0.0, dt) - 0.0f) < epsilon);
+}
+
+
 TEST_CASE( "D = 1.0 Constant input ", "[run]") {
     PidControllerState pid;
     ResetPidControllerState(&pid);
@@ -69,7 +85,24 @@ TEST_CASE( "D = 1.0 Non-constant input ", "[run]") {
     REQUIRE( abs(RunPidController(&pid, inputs[3], 1.0) - expectedOutputs[3]) < epsilon);
 }
 
-TEST_CASE( "I = 0.1 Constant dt", "[run]") {
+TEST_CASE( "D = 1.0 Non-constant input, dt = 0.1 ", "[run]") {
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 0;
+    pid.Ki = 0;
+    pid.Kd = 1.0;
+    float dt = 0.1;
+    
+    float inputs[]          = {1.0, 1.5, 1.3, 1.3};
+    float expectedOutputs[] = {0.0, 5.0, -2.0, 0.0};
+    
+    REQUIRE( abs(RunPidController(&pid, inputs[0], dt) - expectedOutputs[0]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[1], dt) - expectedOutputs[1]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[2], dt) - expectedOutputs[2]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[3], dt) - expectedOutputs[3]) < epsilon);
+}
+
+TEST_CASE( "I = 0.1 Constant", "[run]") {
     PidControllerState pid;
     ResetPidControllerState(&pid);
     pid.Kp = 0;
@@ -122,3 +155,23 @@ TEST_CASE( "I = 0.5 integrator lower bound", "[run]") {
     REQUIRE( abs(RunPidController(&pid, inputs[1], dt) - expectedOutputs[1]) < epsilon);
     REQUIRE( abs(RunPidController(&pid, inputs[2], dt) - expectedOutputs[2]) < epsilon);
 }
+
+TEST_CASE( "I = 0.1 Constant, dt = 0.1", "[run]") {
+    PidControllerState pid;
+    ResetPidControllerState(&pid);
+    pid.Kp = 0;
+    pid.Ki = 0.1;
+    pid.Kd = 0;
+    pid.integrator_min = -1.0;
+    pid.integrator_max = 1.0;
+    float dt = 0.1;
+    
+    float inputs[]          = {1.0, 0.5, -0.3};
+    float expectedOutputs[] = {0.01, 0.015, 0.012};
+    
+    REQUIRE( abs(RunPidController(&pid, inputs[0], dt) - expectedOutputs[0]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[1], dt) - expectedOutputs[1]) < epsilon);
+    REQUIRE( abs(RunPidController(&pid, inputs[2], dt) - expectedOutputs[2]) < epsilon);
+}
+
+// TODO Test simultaneous P, I, & D
