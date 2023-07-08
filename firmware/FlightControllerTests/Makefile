@@ -19,6 +19,9 @@ all: tests
 build: $(TESTS_EXE)
 	$(info "Build complete")
 
+so:
+	$(CC) $(INC) $(OPTS) -fPIC -shared -o PidController.so $(FC_PROJ)/PidController.c 
+
 PidControllerTests.exe : PidControllerTests.c $(FC_PROJ)/PidController.c
 	$(CC) $(INC) $(OPTS) $(FC_PROJ)/PidController.c PidControllerTests.c -o PidControllerTests.exe
 
@@ -28,7 +31,7 @@ tests: build
 
 .PHONY: clean
 clean:
-	rm -f ./*.exe
+	rm -f ./*.exe ./*.so
 
 
 # Enable dependency checking

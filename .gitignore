@@ -44,9 +44,9 @@
 *.pre
 *.p1
 *.lst
-*.sym
 *.obj
 *.o
+*.sym
 *.sdb
 *.obj.dmp
 html/
@@ -96,3 +96,8 @@ fp-info-cache
 *.xml
 *.csv
 export/
+
+#python
+*.pyc
+__pycache__
+
