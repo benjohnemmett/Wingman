@@ -5,8 +5,8 @@
  * Created on August 15, 2022, 4:14 PM
  */
 
-#ifndef FLIGHTCONTROLLERTYPES_H
-#define	FLIGHTCONTROLLERTYPES_H
+#ifndef FLIGHTCONTROLLERCOMMONTYPES_H
+#define	FLIGHTCONTROLLERCOMMONTYPES_H
 
 #ifdef	__cplusplus
 extern "C" {
@@ -31,5 +31,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* FLIGHTCONTROLLERTYPES_H */
-
+#endif	/* FLIGHTCONTROLLERCOMMONTYPES_H */

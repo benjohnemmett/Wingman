@@ -8,10 +8,15 @@
 #ifndef HAL_ATMEGA4809_H
 #define	HAL_ATMEGA4809_H
 
-#include <avr/io.h>
-#include "../FlightControllerTypes.h"
-
 #define F_CPU 20000000
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+#include "../Libraries/atmega4809-stuff/UART.X/uart.h"
+#include "../HAL_Common.X/HAL_Functions.h"
+#include "../HAL_Common.X/FlightControllerCommonTypes.h"
+
 
 #define PWM_IN_1_PORT A
 #define PWM_IN_1_PIN 5
@@ -74,15 +79,6 @@ typedef struct HardwareConfiguration HardwareConfiguration;
 extern "C" {
 #endif
 
-void platform_specific_setup();
-
-void platform_specific_test();
-
-void platform_specific_write_string(char* string);
-
-void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output);
-
-void platform_specific_print_test_data();
 
 #ifdef	__cplusplus
 }
