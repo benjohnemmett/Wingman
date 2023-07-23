@@ -2,14 +2,32 @@
  * File:   HAL_ATMega4809.h
  * Author: ben
  *
- * Created on August 13, 2022, 12:28 PM
+ * Created on July 9, 2023, 10:53 PM
  */
 
 #ifndef HAL_ATMEGA4809_H
 #define	HAL_ATMEGA4809_H
 
 #include <avr/io.h>
-#include "../FlightControllerTypes.h"
+
+// IO Definitions
+#define __SET_OUTPUT_HIGH__(port, pin) __PIN_OUT_SET_REG__(port) |= BIT_VAL(pin)
+#define __SET_OUTPUT_LOW__(port, pin) __PIN_OUT_CLR_REG__(port) |= BIT_VAL(pin)
+#define __CONFIGURE_PIN_AS_OUTPUT__(port, pin) __PIN_DIR_REG__(port) |= BIT_VAL(pin)
+#define __PIN_DIR_REG__(port) (__PORT_REG__(port).DIR)
+#define __PIN_OUT_SET_REG__(port) (__PORT_REG__(port).OUTSET)
+#define __PIN_OUT_CLR_REG__(port) (__PORT_REG__(port).OUTCLR)
+#define __PORT_PIN_CTRL_REG__(port, pin) __PORT_REG__(port).__PIN_CTRL_REG__(pin)
+#define __PORT_REG__(port) PORT##port
+#define __PIN_CTRL_REG__(pin) PIN##pin##CTRL
+
+#define MICROS_TO_TCA_TICKS_DIV8 2.5
+#define MICROS_TO_TCA_TICKS_DIV16 1.25
+#define TCA_CLOCKSEL TCA_SINGLE_CLKSEL_DIV16_gc
+#define MICROS_TO_TCA_TICKS MICROS_TO_TCA_TICKS_DIV16
+#define SERVO_PWM_PERIOD_US 20000
+#define SERVO_PWM_PERIOD_TICKS_DIV16 25000
+
 
 #define F_CPU 20000000
 
@@ -70,20 +88,17 @@ struct HardwareConfiguration{
 };
 typedef struct HardwareConfiguration HardwareConfiguration;
 
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
 
-void platform_specific_setup();
+    void HAL_hardware_setup();
 
-void platform_specific_test();
-
-void platform_specific_write_string(char* string);
-
-void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output);
-
-void platform_specific_print_test_data();
-
+    void HAL_print_string(char* string);
+    
+    void HAL_flash_status_lights();
+    
 #ifdef	__cplusplus
 }
 #endif

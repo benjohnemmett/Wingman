@@ -1,8 +1,5 @@
 
 #include "HAL_ATMega4809.h"
-#include "../../Libraries/atmega4809-stuff/UART.X/uart.h"
-#include <util/delay.h>
-#include <avr/interrupt.h>
 
 // IO Definitions
 #define __SET_OUTPUT_HIGH__(port, pin) __PIN_OUT_SET_REG__(port) |= BIT_VAL(pin)
@@ -27,7 +24,7 @@
 #define ENABLE_TIMER_A() TCA0.SINGLE.CTRLA |= 0x01
 #define DISABLE_TIMER_A() TCA0.SINGLE.CTRLA &= ~0x01
 
-extern volatile PwmInputCapture pwm_input_capture;
+extern volatile PwmInputCapture pwm_input_capture; // TODO I think I'd rather this be passed in through function call instead of using extern
 extern volatile PwmOutputData pwm_output_data;
 volatile uint8_t *update_timer_expired_ptr;
 
@@ -254,7 +251,7 @@ void platform_specific_test() {
     
     while (1) {
         PORTA.OUTTGL = PIN4_bm;
-        print_pwm_input_capture();
+        //print_pwm_input_capture();
     }
 }
 
