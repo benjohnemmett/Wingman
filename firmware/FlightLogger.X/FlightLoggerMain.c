@@ -17,9 +17,9 @@ int main(void) {
     i2c_functions.f_I2cRead = I2cRead;
     i2c_functions.f_I2cSendStop = I2cSendStop;
     
-    platform_specific_setup(); // TODO Maybe rename these HAL functions to HAL_hardware_setup() and HAL_write()
+    HAL_setup(); // TODO Maybe rename these HAL functions to HAL_hardware_setup() and HAL_write()
     
-    platform_specific_write_string((char*)"\r\nFlightLogger Main 1.0 Starting Up\r\n\0");
+    HAL_write_string((char*)"\r\nFlightLogger Main 1.0 Starting Up\r\n\0");
         
     while (1) {
     }

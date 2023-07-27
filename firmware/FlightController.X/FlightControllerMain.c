@@ -19,9 +19,9 @@ volatile PwmOutputData pwm_output_data;
 volatile unsigned char update_timer_expired = 0;
 
 int main(void) {
-    platform_specific_setup(&update_timer_expired);
-    platform_specific_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
-    platform_specific_test();
+    HAL_setup(&update_timer_expired);
+    HAL_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
+    HAL_test();
     
     //Start Update timer
     while (1) {
@@ -42,7 +42,7 @@ int main(void) {
         float pitchCommand = RunPidController(&pitchPid, pitchError, UPDATE_PERIOD_MS);
         
         // Update PWM controller
-        platform_specific_update_pwm_output(&pwm_input_capture, &pwm_output_data);
-        //platform_specific_print_test_data();
+        HAL_update_pwm_output(&pwm_input_capture, &pwm_output_data);
+        //HAL_print_test_data();
     }
 }

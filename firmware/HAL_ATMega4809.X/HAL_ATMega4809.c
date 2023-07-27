@@ -115,7 +115,7 @@ void read_dip_switches() {
     hw_config.dip_2 = !(PORTF.IN & (1 << DIP2_PIN));
 }
 
-void platform_specific_setup(uint8_t *update_timer_expired_ptr) {
+void HAL_setup(uint8_t *update_timer_expired_ptr) {
     update_timer_expired_ptr = update_timer_expired_ptr;
     
     // Set CPU clock divider to 1
@@ -135,7 +135,7 @@ void platform_specific_setup(uint8_t *update_timer_expired_ptr) {
 /*************************************************************
  * Update Functions 
  *************************************************************/
-void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output) {
+void HAL_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output) {
     cli();
     uint16_t in_1 = input->ch1_pulse_width_us;
     uint16_t in_2 = input->ch2_pulse_width_us;
@@ -235,7 +235,7 @@ void print_pwm_input_capture() {
 /* 
  * Blink a light and print test data
  */
-void platform_specific_test() {
+void HAL_test() {
     PORTA.DIRSET = PIN4_bm; // Set as output
     
     volatile PwmInputCapture test_input;
@@ -244,7 +244,7 @@ void platform_specific_test() {
     test_input.ch3_pulse_width_us = 1600;
     test_input.ch4_pulse_width_us = 2000;
     
-    platform_specific_update_pwm_output(&test_input, &pwm_output_data);
+    HAL_update_pwm_output(&test_input, &pwm_output_data);
     pwm_output_data.current_channel = 4;
     
     uart0_send_string((char*)"Begin UART0 Test...\r\n\0");
@@ -255,14 +255,14 @@ void platform_specific_test() {
     }
 }
 
-void platform_specific_print_test_data() {
+void HAL_print_test_data() {
     print_pwm_input_capture();
 }
 
 /* 
  * Write string to UART
  */
-void platform_specific_write_string(char* string) {
+void HAL_write_string(char* string) {
     uart0_send_string(string);
 }
 

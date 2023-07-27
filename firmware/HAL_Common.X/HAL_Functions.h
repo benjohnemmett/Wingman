@@ -14,15 +14,15 @@
 extern "C" {
 #endif
 
-void platform_specific_setup();
+void HAL_setup();
 
-void platform_specific_test();
+void HAL_test();
 
-void platform_specific_write_string(char* string);
+void HAL_write_string(char* string);
 
-void platform_specific_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output);
+void HAL_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output);
 
-void platform_specific_print_test_data();
+void HAL_print_test_data();
 
 
 #ifdef	__cplusplus
