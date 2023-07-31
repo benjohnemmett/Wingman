@@ -75,28 +75,28 @@ void setup_status_lights() {
     STAT4_OFF();
     
     STAT1_ON();
-    _delay_ms(200);
+    _delay_ms(500);
     STAT1_OFF();
     STAT2_ON();
-    _delay_ms(200);
+    _delay_ms(500);
     STAT2_OFF();
     STAT3_ON();
-    _delay_ms(200);
+    _delay_ms(500);
     STAT3_OFF();
     STAT4_ON();
-    _delay_ms(200);
+    _delay_ms(500);
     STAT4_OFF();
     
     if (hw_config.dip_1) {
-        uart0_send_string((char*)"DIP 1 ON\r\n");
+        uart0_send_string((char*)"DIP 1 ON\r\n\0");
         STAT1_ON();
         _delay_ms(500);
         STAT1_OFF();
     } else {
-        uart0_send_string((char*)"DIP 1 OFF\r\n");
+        uart0_send_string((char*)"DIP 1 OFF\r\n\0");
     }
     if (hw_config.dip_2) {
-        uart0_send_string((char*)"DIP 2 ON\r\n");
+        uart0_send_string((char*)"DIP 2 ON\r\n\0");
         STAT2_ON();
         _delay_ms(500);
         STAT2_OFF();
@@ -125,10 +125,16 @@ void HAL_setup(uint8_t *update_timer_expired_ptr) {
     
     read_dip_switches();
     setup_status_lights();
-    
+}
+
+
+void HAL_setup_pwm_input_capture() {
     setup_input_capture();
+    sei();
+}
+
+void HAL_setup_pwm_output() {
     setup_output_pwm();
-    
     sei();
 }
 
@@ -236,22 +242,11 @@ void print_pwm_input_capture() {
  * Blink a light and print test data
  */
 void HAL_test() {
-    PORTA.DIRSET = PIN4_bm; // Set as output
-    
-    volatile PwmInputCapture test_input;
-    test_input.ch1_pulse_width_us = 1000;
-    test_input.ch2_pulse_width_us = 1300;
-    test_input.ch3_pulse_width_us = 1600;
-    test_input.ch4_pulse_width_us = 2000;
-    
-    HAL_update_pwm_output(&test_input, &pwm_output_data);
-    pwm_output_data.current_channel = 4;
-    
     uart0_send_string((char*)"Begin UART0 Test...\r\n\0");
     
     while (1) {
-        PORTA.OUTTGL = PIN4_bm;
-        //print_pwm_input_capture();
+        
+        _delay_ms(500);
     }
 }
 
@@ -264,6 +259,25 @@ void HAL_print_test_data() {
  */
 void HAL_write_string(char* string) {
     uart0_send_string(string);
+}
+
+void HAL_sleep_ms(uint16_t sleep_ms) {
+    while (sleep_ms > 1000) {
+        _delay_ms(1000);
+        sleep_ms -= 1000;
+    }
+    while (sleep_ms > 10) {
+        _delay_ms(10);
+        sleep_ms -= 10;
+    }
+    while (sleep_ms > 10) {
+        _delay_ms(10);
+        sleep_ms -= 10;
+    }
+    while (sleep_ms > 1) {
+        _delay_ms(1);
+        sleep_ms -= 1;
+    }
 }
 
 

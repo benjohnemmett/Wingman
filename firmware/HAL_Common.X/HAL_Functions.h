@@ -16,6 +16,10 @@ extern "C" {
 
 void HAL_setup();
 
+void HAL_setup_pwm_input_capture();
+
+void HAL_setup_pwm_output();
+
 void HAL_test();
 
 void HAL_write_string(char* string);
@@ -24,6 +28,7 @@ void HAL_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputDa
 
 void HAL_print_test_data();
 
+void HAL_sleep_ms(uint16_t sleep_ms);
 
 #ifdef	__cplusplus
 }

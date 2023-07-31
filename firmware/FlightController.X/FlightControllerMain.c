@@ -20,6 +20,9 @@ volatile unsigned char update_timer_expired = 0;
 
 int main(void) {
     HAL_setup(&update_timer_expired);
+    HAL_setup_pwm_input_capture();
+    HAL_setup_pwm_output();
+    
     HAL_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
     HAL_test();
     
