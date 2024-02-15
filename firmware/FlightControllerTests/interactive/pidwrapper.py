@@ -17,9 +17,9 @@ class PidControllerState(ctypes.Structure):
 class PidControllerWrapper():
      
     def __init__(self, kp, ki, kd):
-        self.pid = ctypes.CDLL("PidController.so")
+        self.pid = ctypes.CDLL("FlightControllerTests/Interactive/PidController.so")
         self.pid.RunPidController.restype = ctypes.c_float
-        print(f" loaded pid libarary {self.pid}")
+        print(f" loaded pid library {self.pid}")
 
         self.state = PidControllerState(ctypes.c_float(kp),
                                     ctypes.c_float(ki),
@@ -34,4 +34,3 @@ class PidControllerWrapper():
     def run(self, error, dt):
         correction = self.pid.RunPidController(ctypes.pointer(self.state), ctypes.c_float(error), ctypes.c_float(dt))
         return correction
-

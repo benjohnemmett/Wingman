@@ -24,7 +24,6 @@ int main(void) {
     HAL_setup_pwm_output();
     
     HAL_write_string((char*)"\r\nFC Main Starting Up\r\n\0");
-    HAL_test();
     
     //Start Update timer
     while (1) {
@@ -46,6 +45,6 @@ int main(void) {
         
         // Update PWM controller
         HAL_update_pwm_output(&pwm_input_capture, &pwm_output_data);
-        //HAL_print_test_data();
+        HAL_print_test_data();
     }
 }
