@@ -22,23 +22,29 @@
 #define PWM_IN_1_PIN 5
 #define PWM_IN_1_PIN_bm (0x01 << PWM_IN_1_PIN)
 #define PWM_IN_2_PORT A
-#define PWM_IN_2_PIN 7
+#define PWM_IN_2_PIN 6
 #define PWM_IN_2_PIN_bm (0x01 << PWM_IN_2_PIN)
-#define PWM_IN_3_PORT B
-#define PWM_IN_3_PIN 1
+#define PWM_IN_3_PORT A
+#define PWM_IN_3_PIN 7
 #define PWM_IN_3_PIN_bm (0x01 << PWM_IN_3_PIN)
 #define PWM_IN_4_PORT B
-#define PWM_IN_4_PIN 3
+#define PWM_IN_4_PIN 0
 #define PWM_IN_4_PIN_bm (0x01 << PWM_IN_4_PIN)
+#define PWM_IN_5_PORT B
+#define PWM_IN_5_PIN 1
+#define PWM_IN_5_PIN_bm (0x01 << PWM_IN_4_PIN)
+#define PWM_IN_6_PORT B
+#define PWM_IN_7_PIN 2
+#define PWM_IN_8_PIN_bm (0x01 << PWM_IN_4_PIN)
 
-#define PWM_OUT_1_PORT F
-#define PWM_OUT_1_PIN 2
-#define PWM_OUT_2_PORT F
-#define PWM_OUT_2_PIN 0
-#define PWM_OUT_3_PORT E
-#define PWM_OUT_3_PIN 2
-#define PWM_OUT_4_PORT E
-#define PWM_OUT_4_PIN 0
+#define PWM_OUT_1_PORT C
+#define PWM_OUT_1_PIN 4
+#define PWM_OUT_2_PORT C
+#define PWM_OUT_2_PIN 5
+#define PWM_OUT_3_PORT C
+#define PWM_OUT_3_PIN 6
+#define PWM_OUT_4_PORT C
+#define PWM_OUT_4_PIN 7
 
 #define STAT_LED_1_PORT D
 #define STAT_LED_1_PIN 0

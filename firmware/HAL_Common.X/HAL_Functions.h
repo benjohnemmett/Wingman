@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-void HAL_setup();
+void HAL_setup(volatile unsigned char* update_timer_expired);
 
 void HAL_setup_pwm_input_capture();
 

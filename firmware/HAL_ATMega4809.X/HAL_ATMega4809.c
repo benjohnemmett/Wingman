@@ -1,5 +1,7 @@
 
+#include <stdint.h>
 #include "HAL_ATMega4809.h"
+
 
 // IO Definitions
 #define __SET_OUTPUT_HIGH__(port, pin) __PIN_OUT_SET_REG__(port) |= BIT_VAL(pin)
@@ -51,6 +53,7 @@ static void setup_input_capture() {
     __PORT_PIN_CTRL_REG__(PWM_IN_2_PORT, PWM_IN_2_PIN) |= PORT_ISC_BOTHEDGES_gc;
     __PORT_PIN_CTRL_REG__(PWM_IN_3_PORT, PWM_IN_3_PIN) |= PORT_ISC_BOTHEDGES_gc;
     __PORT_PIN_CTRL_REG__(PWM_IN_4_PORT, PWM_IN_4_PIN) |= PORT_ISC_BOTHEDGES_gc;
+
     
     // Start input capture timers
     TCB0.CCMP = 0xFFFF; // Set TOP value to MAX
@@ -115,7 +118,7 @@ void read_dip_switches() {
     hw_config.dip_2 = !(PORTF.IN & (1 << DIP2_PIN));
 }
 
-void HAL_setup(uint8_t *update_timer_expired_ptr) {
+void HAL_setup(volatile uint8_t *update_timer_expired_ptr) {
     update_timer_expired_ptr = update_timer_expired_ptr;
     
     // Set CPU clock divider to 1
@@ -242,11 +245,56 @@ void print_pwm_input_capture() {
  * Blink a light and print test data
  */
 void HAL_test() {
-    uart0_send_string((char*)"Begin UART0 Test...\r\n\0");
+    uart0_send_string((char*)"Begin HAL_test ...\r\n\0");
+    
+    //Set PWM 1-4 as outputs
+
+    PORTA.DIRSET |= PIN5_bm; // Set pin as output
+    PORTA.DIRSET |= PIN6_bm;
+    PORTA.DIRSET |= PIN7_bm;
+    PORTB.DIRSET |= PIN0_bm;
+    PORTB.DIRSET |= PIN1_bm;
+    PORTB.DIRSET |= PIN2_bm;
+    
+    PORTA.OUTCLR |= PIN5_bm; // Set output low
+    PORTA.OUTCLR |= PIN6_bm;
+    PORTA.OUTCLR |= PIN7_bm;
+    PORTB.OUTCLR |= PIN0_bm;
+    PORTB.OUTCLR |= PIN1_bm;
+    PORTB.OUTCLR |= PIN2_bm;
+   
     
     while (1) {
+        uart0_send_string((char*)"Start Loop\r\n\0");
+        PORTA.OUTSET |= PIN5_bm;
+        _delay_ms(200);
+        PORTA.OUTCLR |= PIN5_bm;
+        _delay_ms(200);
         
-        _delay_ms(500);
+        PORTA.OUTSET |= PIN6_bm;
+        _delay_ms(200);
+        PORTA.OUTCLR |= PIN6_bm;
+        _delay_ms(200);
+        
+        PORTA.OUTSET |= PIN7_bm;
+        _delay_ms(200);
+        PORTA.OUTCLR |= PIN7_bm;
+        _delay_ms(200);
+        
+        PORTB.OUTSET |= PIN0_bm;
+        _delay_ms(200);
+        PORTB.OUTCLR |= PIN0_bm;
+        _delay_ms(200);
+        
+        PORTB.OUTSET |= PIN1_bm;
+        _delay_ms(200);
+        PORTB.OUTCLR |= PIN1_bm;
+        _delay_ms(200);
+        
+        PORTB.OUTSET |= PIN2_bm;
+        _delay_ms(200);
+        PORTB.OUTCLR |= PIN2_bm;
+        _delay_ms(200);
     }
 }
 
@@ -311,45 +359,61 @@ ISR(TCA0_CMP0_vect) {
     ENABLE_TIMER_A();
 }
 
+
 ISR(PORTA_PORT_vect) {
+    uint8_t sreg = SREG;
     uint8_t pins = PORTA.IN;
-    uint8_t interrupt_flags = PORTA.INTFLAGS; // store active flags
-    PORTA.INTFLAGS = interrupt_flags; // Clear active flags
+    uint8_t int_flags = PORTA.INTFLAGS;
+    PORTA.INTFLAGS |= int_flags;
     
-    if (interrupt_flags & PWM_IN_1_PIN_bm) {
-        if (pins & PWM_IN_1_PIN_bm) {
+    if (int_flags & PIN5_bm) {
+        if (pins & PIN5_bm) {
             TCB0.CNT = 0;
+            STAT1_ON();
         } else {
             pwm_input_capture.ch1_pulse_width_us = TCB0.CNT/10;
+            STAT1_OFF();
         }
     }
-    if (interrupt_flags & PWM_IN_2_PIN_bm) {
-        if (pins & PWM_IN_2_PIN_bm) {
+    if (int_flags & PIN6_bm) {
+        if (pins & PIN6_bm) {
+            STAT2_ON();
             TCB1.CNT = 0;
         } else {
             pwm_input_capture.ch2_pulse_width_us = TCB1.CNT/10;
+            STAT2_OFF();
         }
     }
+    if (int_flags & PIN7_bm) {
+        if (pins & PIN7_bm) {
+            TCB2.CNT = 0;
+            STAT3_ON();
+        } else {
+            pwm_input_capture.ch3_pulse_width_us = TCB2.CNT/10;
+            STAT3_OFF();
+        }
+    }
+
+    SREG = sreg;
 }
 
 ISR(PORTB_PORT_vect) {
+    uint8_t sreg = SREG;
     uint8_t pins = PORTB.IN;
     uint8_t interrupt_flags = PORTB.INTFLAGS; // store active flags
-    PORTB.INTFLAGS = interrupt_flags; // Clear active flags
-    if (interrupt_flags & PWM_IN_3_PIN_bm) {
-        if (pins & PWM_IN_3_PIN_bm) {
-            TCB2.CNT = 0;
-        } else {
-            pwm_input_capture.ch3_pulse_width_us = TCB2.CNT/10;
-        }
-    }
-    if (interrupt_flags & PWM_IN_4_PIN_bm) {
-        if (pins & PWM_IN_4_PIN_bm) {
+    PORTB.INTFLAGS |= interrupt_flags;
+    // PWM 4 IN
+    if (interrupt_flags & PIN0_bm) {
+        if (pins & PIN0_bm) {
             TCB3.CNT = 0;
+            STAT4_ON();
         } else {
             pwm_input_capture.ch4_pulse_width_us = TCB3.CNT/10;
+            STAT4_OFF();
         }
     }
+
+    SREG = sreg;
 }
 
 #undef __PIN_CTRL_REG__
