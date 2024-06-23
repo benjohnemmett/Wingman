@@ -12,10 +12,10 @@
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects>
-                <make-dep-project>../Libraries/atmega4809-stuff/I2C.X</make-dep-project>
                 <make-dep-project>../HAL_ATMega4809.X</make-dep-project>
                 <make-dep-project>../HAL_Common.X</make-dep-project>
-                <make-dep-project>../Libraries/atmega4809-stuff/UART.X</make-dep-project>
+                <make-dep-project>../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X</make-dep-project>
+                <make-dep-project>../Libraries/mcu-device-util/uart/UART-ATMega4809.X</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>
             <confList>

@@ -13,7 +13,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include "../Libraries/atmega4809-stuff/UART.X/uart.h"
+#include "../Libraries/mcu-device-util/uart/uart.h"
 #include "../HAL_Common.X/HAL_Functions.h"
 #include "../HAL_Common.X/FlightControllerCommonTypes.h"
 

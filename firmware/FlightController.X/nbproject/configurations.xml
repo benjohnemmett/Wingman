@@ -78,37 +78,37 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../Libraries/atmega4809-stuff/I2C.X"
+              <makeArtifact PL="../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X"
                             CT="3"
                             CN="default"
                             AC="true"
                             BL="true"
-                            WD="../Libraries/atmega4809-stuff/I2C.X"
+                            WD="../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X"
                             BC="${MAKE}  -f Makefile CONF=default"
                             DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
                             CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
-                            OP="dist/default/production/I2C.X.a"
-                            DOP="dist/default/debug/I2C.X.a"
-                            FL="dist/default/production/I2C.X.a"
-                            PD="dist/default/production/I2C.X.a"
-                            DD="dist/default/debug/I2C.X.a">
+                            OP="dist/default/production/I2C-ATMega4809.X.a"
+                            DOP="dist/default/debug/I2C-ATMega4809.X.a"
+                            FL="dist/default/production/I2C-ATMega4809.X.a"
+                            PD="dist/default/production/I2C-ATMega4809.X.a"
+                            DD="dist/default/debug/I2C-ATMega4809.X.a">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../Libraries/atmega4809-stuff/UART.X"
+              <makeArtifact PL="../Libraries/mcu-device-util/uart/UART-ATMega4809.X"
                             CT="3"
                             CN="default"
                             AC="true"
                             BL="true"
-                            WD="../Libraries/atmega4809-stuff/UART.X"
+                            WD="../Libraries/mcu-device-util/uart/UART-ATMega4809.X"
                             BC="${MAKE}  -f Makefile CONF=default"
                             DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
                             CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
-                            OP="dist/default/production/UART.X.a"
-                            DOP="dist/default/debug/UART.X.a"
-                            FL="dist/default/production/UART.X.a"
-                            PD="dist/default/production/UART.X.a"
-                            DD="dist/default/debug/UART.X.a">
+                            OP="dist/default/production/UART-ATMega4809.X.a"
+                            DOP="dist/default/debug/UART-ATMega4809.X.a"
+                            FL="dist/default/production/UART-ATMega4809.X.a"
+                            PD="dist/default/production/UART-ATMega4809.X.a"
+                            DD="dist/default/debug/UART-ATMega4809.X.a">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>

@@ -4,10 +4,12 @@
  *
  * Created on August 15, 2022, 4:14 PM
  */
-#include <stdint.h>
+
 
 #ifndef FLIGHTCONTROLLERCOMMONTYPES_H
 #define	FLIGHTCONTROLLERCOMMONTYPES_H
+
+#include <stdint.h>
 
 #ifdef	__cplusplus
 extern "C" {

@@ -8,6 +8,7 @@
 #ifndef HAL_FUNCTIONS_H
 #define	HAL_FUNCTIONS_H
 
+#include <stdint.h>
 #include "FlightControllerCommonTypes.h"
 
 #ifdef	__cplusplus
