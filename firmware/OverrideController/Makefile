@@ -1,7 +1,7 @@
 F_CPU=1000000
 CC=avr-gcc
 MCU=attiny85
-PROG=usbtiny
+PROG=usbasp
 
 .PHONY: all
 all: main.hex

@@ -3,7 +3,9 @@
 #include <avr/interrupt.h>
 
 #define OVERRIDE_PORT PB4
-#define RC_RECEIVER_PORT PB0
+#define RC_RECEIVER_PORT PB3
+#define RC_RECEIVER_PCINT PCINT3
+
 
 // Macros
 #define OVERRIDE_ON PORTB |= (1 << OVERRIDE_PORT)
@@ -51,7 +53,7 @@ float Percent_PWM(uint8_t count)
     // Time units are in ms
     float min = 1;
     float max = 2;
-    float p = 0.016;    // This is dependent on the timer prescaler (0.016 for prescaler of 128)
+    float p = 0.016;    // ms/count. This is dependent on the timer prescaler (0.016 for prescaler of 128) 
     
     float pct = (p*count - min) / (max - min) * 100;
     
@@ -96,7 +98,8 @@ void Init_PORT(void)
 
 void Init_INTERRUPTS(void)
 {
-    PCMSK |= (1 << PCINT0);     // Enable pin change interrupt for PB0
+    GIMSK |= (1 << PCIE);
+    PCMSK |= (1 << RC_RECEIVER_PCINT);     // Enable pin change interrupt
     sei();                      // Enable Global Interrupt flag
 }
 
