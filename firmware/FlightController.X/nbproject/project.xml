@@ -12,8 +12,10 @@
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects>
-                <make-dep-project>../HAL_ATMega4809.X</make-dep-project>
+                <make-dep-project>../Libraries/mcu-device-util/MPU6050.X</make-dep-project>
                 <make-dep-project>../HAL_Common.X</make-dep-project>
+                <make-dep-project>../HAL_ATMega4809.X</make-dep-project>
+                <make-dep-project>../Libraries/mcu-device-util/PCA9685.X</make-dep-project>
                 <make-dep-project>../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X</make-dep-project>
                 <make-dep-project>../Libraries/mcu-device-util/uart/UART-ATMega4809.X</make-dep-project>
             </make-dep-projects>

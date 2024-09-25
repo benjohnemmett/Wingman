@@ -1,7 +1,6 @@
-
-#include <stdint.h>
 #include "HAL_ATMega4809.h"
 
+#define USE_I2C_PCA9685
 
 // IO Definitions
 #define __SET_OUTPUT_HIGH__(port, pin) __PIN_OUT_SET_REG__(port) |= BIT_VAL(pin)
@@ -36,6 +35,9 @@ HardwareConfiguration hw_config;
  * Setup Functions 
  *************************************************************/
 static void setup_output_pwm() {
+#ifdef USE_I2C_PCA9685
+    SetupPca9685(PCA9685_PRESCALE_50HZ);
+#else
     __CONFIGURE_PIN_AS_OUTPUT__(PWM_OUT_1_PORT, PWM_OUT_1_PIN);
     __CONFIGURE_PIN_AS_OUTPUT__(PWM_OUT_2_PORT, PWM_OUT_2_PIN);
     __CONFIGURE_PIN_AS_OUTPUT__(PWM_OUT_3_PORT, PWM_OUT_3_PIN);
@@ -45,6 +47,7 @@ static void setup_output_pwm() {
     TCA0.SINGLE.CMP0 = 500 * MICROS_TO_TCA_TICKS; // default value
     TCA0.SINGLE.INTCTRL |= TCA_SINGLE_CMP0_bm;
     TCA0.SINGLE.CTRLA = TCA_CLOCKSEL | 0x01;
+#endif
 }
 
 static void setup_input_capture() {
@@ -118,8 +121,8 @@ void read_dip_switches() {
     hw_config.dip_2 = !(PORTF.IN & (1 << DIP2_PIN));
 }
 
-void HAL_setup(volatile uint8_t *update_timer_expired_ptr) {
-    update_timer_expired_ptr = update_timer_expired_ptr;
+void HAL_setup(volatile uint8_t *new_update_timer_expired_ptr) {
+    update_timer_expired_ptr = new_update_timer_expired_ptr;
     
     // Set CPU clock divider to 1
     CCP = CCP_IOREG_gc; //Configuration Change Protection
@@ -128,8 +131,19 @@ void HAL_setup(volatile uint8_t *update_timer_expired_ptr) {
     
     read_dip_switches();
     setup_status_lights();
+    
+    // Initialize RTC for main loop clock
+    // Datasheet 22.4
+    
+    // Check RTC.STATUS and RTC.PITSTATUS Synchronization busy bits before using
+    while (RTC.STATUS != 0) {  } // make sure the RTC is free
+    while (RTC.PITSTATUS != 0) {  } // make sure the RTC PIT is free
+    
+    RTC.CLKSEL = RTC_CLKSEL_INT32K_gc;
+    RTC.PER = 328; // ~10ms
+    RTC.INTCTRL = 0x01; // Enable OVF Interrupt
+    RTC.CTRLA = RTC_PRESCALER_DIV1_gc | 0x01; // set prescaler and enable RTC
 }
-
 
 void HAL_setup_pwm_input_capture() {
     setup_input_capture();
@@ -144,7 +158,20 @@ void HAL_setup_pwm_output() {
 /*************************************************************
  * Update Functions 
  *************************************************************/
-void HAL_update_pwm_output(volatile PwmInputCapture *input, volatile PwmOutputData *output) {
+
+/*
+ * Updates servo control using ControlOutputData
+ */
+void HAL_update_pwm_output(ControlOutputData *output_control) {
+    SetServo(YAW_CHANNEL, output_control->yaw_control);
+    SetServo(PITCH_CHANNEL, output_control->pitch_control);
+    SetServo(ROLL_CHANNEL, output_control->roll_control);
+}
+
+/*
+ * Update output data to match input capture
+ */
+void HAL_update_pwm_output_passthrough(volatile PwmInputCapture *input, volatile PwmOutputData *output) {
     cli();
     uint16_t in_1 = input->ch1_pulse_width_us;
     uint16_t in_2 = input->ch2_pulse_width_us;
@@ -329,9 +356,41 @@ void HAL_sleep_ms(uint16_t sleep_ms) {
 }
 
 
+void HAL_set_status_light(uint8_t index, uint8_t status)
+{
+    switch (index)
+    {
+        case 0:
+            status ? STAT1_ON() : STAT1_OFF();
+            break;
+        case 1:
+            status ? STAT2_ON() : STAT2_OFF();
+            break;
+        case 2:
+            status ? STAT3_ON() : STAT3_OFF();
+            break;
+        case 3:
+            status ? STAT4_ON() : STAT4_OFF();
+            break;
+        default:
+            break;
+    }
+}
+
+
 /*************************************************************
  * ISRs 
  *************************************************************/
+
+// Drive manual PWM out for 4 separate channels 
+//   Each PWM channel is updated sequentially starting at channel 1, then when
+//   Channel 1 goes low, channel 2 goes high, and so on. After channel 4 goes low
+//   all channels are held low to complete a 20m (50Hz) period from when channel 1 went high.
+//   * I'm looking at this code a good amount of time after having written it, 
+//   I assume that pwm_output_data.current_channel[5] must be set to (20ms - sum(pwm_output_data.current_channel[:4]))
+//   in order to ensure a 20ms PWM period on each channel. 
+//   ** Also it seems as though a sharp change in the pulse width of any channel 
+//   would cause jitter in the 20ms period of the other channels. 
 ISR(TCA0_CMP0_vect) {
     DISABLE_TIMER_A();
     TCA0.SINGLE.INTFLAGS |= TCA_SINGLE_CMP0_bm; // clear interrupt flag
@@ -413,6 +472,12 @@ ISR(PORTB_PORT_vect) {
         }
     }
 
+    SREG = sreg;
+}
+
+ISR(RTC_CNT_vect) {
+    uint8_t sreg = SREG;
+    *update_timer_expired_ptr = 1;
     SREG = sreg;
 }
 

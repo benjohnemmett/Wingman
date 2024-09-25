@@ -5,6 +5,11 @@
                    displayName="Header Files"
                    projectFiles="true">
     </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
@@ -15,11 +20,6 @@
       <itemPath>FlightControllerMain.c</itemPath>
       <itemPath>PidController.h</itemPath>
       <itemPath>PidController.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -32,17 +32,34 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>pk4hybrid</platformTool>
         <languageToolchain>XC8</languageToolchain>
-        <languageToolchainVersion>2.36</languageToolchainVersion>
+        <languageToolchainVersion>2.46</languageToolchainVersion>
         <platform>4</platform>
       </toolsSet>
       <packs>
-        <pack name="ATmega_DFP" vendor="Microchip" version="3.0.158"/>
+        <pack name="ATmega_DFP" vendor="Microchip" version="3.1.264"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../HAL_Common.X"
+                            CT="3"
+                            CN="default"
+                            AC="true"
+                            BL="true"
+                            WD="../HAL_Common.X"
+                            BC="${MAKE}  -f Makefile CONF=default"
+                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
+                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
+                            OP="dist/default/production/HAL_Common.X.a"
+                            DOP="dist/default/debug/HAL_Common.X.a"
+                            FL="dist/default/production/HAL_Common.X.a"
+                            PD="dist/default/production/HAL_Common.X.a"
+                            DD="dist/default/debug/HAL_Common.X.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../HAL_ATMega4809.X"
                             CT="3"
@@ -61,20 +78,20 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../HAL_Common.X"
+              <makeArtifact PL="../Libraries/mcu-device-util/MPU6050.X"
                             CT="3"
                             CN="default"
                             AC="true"
                             BL="true"
-                            WD="../HAL_Common.X"
+                            WD="../Libraries/mcu-device-util/MPU6050.X"
                             BC="${MAKE}  -f Makefile CONF=default"
                             DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
                             CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
-                            OP="dist/default/production/HAL_Common.X.a"
-                            DOP="dist/default/debug/HAL_Common.X.a"
-                            FL="dist/default/production/HAL_Common.X.a"
-                            PD="dist/default/production/HAL_Common.X.a"
-                            DD="dist/default/debug/HAL_Common.X.a">
+                            OP="dist/default/production/MPU6050.X.a"
+                            DOP="dist/default/debug/MPU6050.X.a"
+                            FL="dist/default/production/MPU6050.X.a"
+                            PD="dist/default/production/MPU6050.X.a"
+                            DD="dist/default/debug/MPU6050.X.a">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
@@ -109,6 +126,23 @@
                             FL="dist/default/production/UART-ATMega4809.X.a"
                             PD="dist/default/production/UART-ATMega4809.X.a"
                             DD="dist/default/debug/UART-ATMega4809.X.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../Libraries/mcu-device-util/PCA9685.X"
+                            CT="3"
+                            CN="default"
+                            AC="true"
+                            BL="true"
+                            WD="../Libraries/mcu-device-util/PCA9685.X"
+                            BC="${MAKE}  -f Makefile CONF=default"
+                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
+                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
+                            OP="dist/default/production/PCA9685.X.a"
+                            DOP="dist/default/debug/PCA9685.X.a"
+                            FL="dist/default/production/PCA9685.X.a"
+                            PD="dist/default/production/PCA9685.X.a"
+                            DD="dist/default/debug/PCA9685.X.a">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
@@ -169,6 +203,7 @@
       </HI-TECH-COMP>
       <HI-TECH-LINK>
         <property key="additional-options-checksum" value=""/>
+        <property key="additional-options-checksumAVR" value=""/>
         <property key="additional-options-code-offset" value=""/>
         <property key="additional-options-command-line" value=""/>
         <property key="additional-options-errata" value=""/>
@@ -704,7 +739,8 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.simultaneous.debug" value="false"/>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="freeze.timers" value="false"/>
@@ -740,7 +776,7 @@
         <property key="periphComp4.gte" value="gt"/>
         <property key="periphComp5.gte" value="gt"/>
         <property key="periphComp6.gte" value="gt"/>
-        <property key="poweroptions.powerenable" value="false"/>
+        <property key="poweroptions.powerenable" value="true"/>
         <property key="programmerToGoFilePath"
                   value="/Users/ben/proj/Wingman/firmware/FlightController.X/debug/default/FlightController_ptg"/>
         <property key="programmerToGoImageName" value="FlightController_ptg"/>
@@ -764,6 +800,7 @@
         <property key="programoptions.program.otpconfig" value="false"/>
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.smart.program" value="When debugging only"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="ptgProgramImage" value="true"/>
         <property key="ptgSendImage" value="true"/>
@@ -1253,7 +1290,8 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.simultaneous.debug" value="false"/>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="freeze.timers" value="false"/>
@@ -1271,7 +1309,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-5fff"/>
-        <property key="poweroptions.powerenable" value="false"/>
+        <property key="poweroptions.powerenable" value="true"/>
         <property key="programmerToGoImageName" value="FlightController_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
@@ -1293,6 +1331,7 @@
         <property key="programoptions.program.otpconfig" value="false"/>
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.smart.program" value="When debugging only"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="ptgProgramImage" value="true"/>
         <property key="ptgSendImage" value="true"/>

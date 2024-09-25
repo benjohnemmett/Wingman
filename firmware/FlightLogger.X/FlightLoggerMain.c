@@ -1,9 +1,7 @@
 
 #include <stdio.h>
-//TODO The I2C stuff should go through the HAL
-#include "../Libraries/mcu-device-util/i2c/i2c.h"
 #include "../HAL_Common.X/FlightControllerCommonTypes.h"
-#include "../HAL_ATMega4809.X/HAL_ATMega4809.h"
+#include "../HAL_Common.X/HAL_Functions.h"
 #include "../Libraries/mcu-device-util/MPU6050.X/mpu_6050.h"
 #include "../Libraries/mcu-device-util/BMP390.X/bmp390.h"
 
@@ -25,7 +23,6 @@ int main(void) {
     
     HAL_setup_pwm_input_capture();
     
-    I2cInitialize();
     Mpu_6050_initialize();
     
     Bmp390CalibrationData calibration_data;
