@@ -3,26 +3,20 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>FlightController</name>
-            <creation-uuid>1ab27141-52f4-4e32-949e-bf8d71bb5277</creation-uuid>
+            <name>HAL_Common</name>
+            <creation-uuid>aeaa65b4-df0f-481c-b2a0-7f4cd2d69bd8</creation-uuid>
             <make-project-type>0</make-project-type>
-            <c-extensions>c</c-extensions>
+            <c-extensions/>
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
-            <make-dep-projects>
-                <make-dep-project>../Libraries/mcu-device-util/MPU6050.X</make-dep-project>
-                <make-dep-project>../HAL_ATMega4809.X</make-dep-project>
-                <make-dep-project>../Libraries/mcu-device-util/PCA9685.X</make-dep-project>
-                <make-dep-project>../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X</make-dep-project>
-                <make-dep-project>../Libraries/mcu-device-util/uart/UART-ATMega4809.X</make-dep-project>
-            </make-dep-projects>
+            <make-dep-projects/>
             <sourceRootList/>
             <confList>
                 <confElem>
                     <name>default</name>
-                    <type>2</type>
+                    <type>3</type>
                 </confElem>
             </confList>
             <formatting>

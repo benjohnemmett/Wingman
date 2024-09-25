@@ -44,23 +44,6 @@
         <linkerTool>
           <linkerLibItems>
             <linkerLibProjectItem>
-              <makeArtifact PL="../HAL_Common.X"
-                            CT="3"
-                            CN="default"
-                            AC="true"
-                            BL="true"
-                            WD="../HAL_Common.X"
-                            BC="${MAKE}  -f Makefile CONF=default"
-                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
-                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
-                            OP="dist/default/production/HAL_Common.X.a"
-                            DOP="dist/default/debug/HAL_Common.X.a"
-                            FL="dist/default/production/HAL_Common.X.a"
-                            PD="dist/default/production/HAL_Common.X.a"
-                            DD="dist/default/debug/HAL_Common.X.a">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
               <makeArtifact PL="../HAL_ATMega4809.X"
                             CT="3"
                             CN="default"

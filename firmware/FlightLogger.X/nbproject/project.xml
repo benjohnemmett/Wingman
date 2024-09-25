@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>FlightController</name>
-            <creation-uuid>1ab27141-52f4-4e32-949e-bf8d71bb5277</creation-uuid>
+            <name>FlightLogger</name>
+            <creation-uuid>f3af9173-a827-4bb4-9068-04bc88bee4b8</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
@@ -14,9 +14,10 @@
             <make-dep-projects>
                 <make-dep-project>../Libraries/mcu-device-util/MPU6050.X</make-dep-project>
                 <make-dep-project>../HAL_ATMega4809.X</make-dep-project>
-                <make-dep-project>../Libraries/mcu-device-util/PCA9685.X</make-dep-project>
-                <make-dep-project>../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X</make-dep-project>
+                <make-dep-project>../HAL_Common.X</make-dep-project>
+                <make-dep-project>../Libraries/mcu-device-util/BMP390.X</make-dep-project>
                 <make-dep-project>../Libraries/mcu-device-util/uart/UART-ATMega4809.X</make-dep-project>
+                <make-dep-project>../Libraries/mcu-device-util/i2c/I2C-ATMega4809.X</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>
             <confList>
