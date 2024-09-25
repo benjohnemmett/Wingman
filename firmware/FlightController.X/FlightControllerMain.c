@@ -50,7 +50,7 @@ int main(void) {
         update_number++;
         
         HAL_write_string((char*)".\r\n\0");
-        HAL_set_status_light(4, update_number % 2); // toggle stat4 LED on each loop iteration
+        HAL_set_status_light(3, update_number % 2); // toggle stat4 LED on each loop iteration
         
         // Get updated body state from IMU
         ReadAccelerometer(MPU_6050_ADDR, ACC_LSB_2G, &acceleration_data);
